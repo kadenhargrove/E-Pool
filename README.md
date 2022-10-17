@@ -15,8 +15,12 @@ pip install flask
 
 ## Running the App
 ```
-python epool.py
+set FLASK_APP=epool.py
 ```
+```
+flask run
+```
+
 
 ## Viewing the App
 Go to `http://127.0.0.1:5000`
