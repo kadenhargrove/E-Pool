@@ -10,7 +10,7 @@ git clone <repo-url>
 ```
 
 ```
-pip install -r requirements.txt
+pip install flask
 ```
 
 ## Running the App
