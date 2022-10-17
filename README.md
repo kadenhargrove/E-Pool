@@ -8,7 +8,8 @@ Make sure you have the latest version of Python installed.
 ```
 git clone <repo-url>
 ```
-
+It is recommended to install flask into a virtual environment.\
+More info at `https://flask.palletsprojects.com/en/2.2.x/installation/`
 ```
 pip install flask
 ```
