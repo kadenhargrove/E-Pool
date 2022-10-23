@@ -1,5 +1,5 @@
 #main epool file
-from flask import Flask, redirect, url_for, render_template, request, session
+from flask import Flask, redirect, url_for, render_template, request, session, flash
 from datetime import timedelta
 
 app = Flask(__name__)
@@ -16,9 +16,11 @@ def login():
         session.permanent = True
         user = request.form["nm"]
         session["user"] = user
+        flash("Login Successful!")
         return redirect(url_for("user"))
     else:
         if "user" in session:
+            flash("Already Logged In!")
             return redirect(url_for("user"))
         return render_template("login.html")
 
@@ -26,12 +28,14 @@ def login():
 def user():
     if "user" in session:
         user = session["user"]
-        return f"<h1>{user}</h1>"
+        return render_template("user.html", user=user)
     else:
+        flash("You are not logged in!")
         return redirect(url_for("login"))
 
 @app.route("/logout")
 def logout():
+    flash("You have been logged out!", "info")
     session.pop("user", None)
     return redirect(url_for("login"))
 
