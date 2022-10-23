@@ -9,4 +9,11 @@
         {% endif %}
     {% endwith %}
 <p>Welcome, {{user}}</p>
+
+<form action="{{ url_for('logout')}}">
+    <input type="submit" value="Logout" />
+</form>
+<form action="{{ url_for('home')}}">
+    <input type="submit" value="Home" />
+</form>
 {% endblock %}
