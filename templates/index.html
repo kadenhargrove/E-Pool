@@ -13,17 +13,8 @@
         <form action="{{ url_for('logout')}}">
             <input type="submit" value="Logout" />
         </form>
+        <form action="{{ url_for('user')}}">
+            <input type="submit" value="Profile" />
+        </form>
     </body>
 </html>
-
-<div class="dropdown">
-    <button>Profile</button>
-    <div class="dropdown-options">
-      <a href="#">Tickets</a>
-      <a href="#">Messaging</a>
-      <a href="#">Profile</a>
-      <a href="#">Setting</a>
-    </div>
-  </div>
-
-
