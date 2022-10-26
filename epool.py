@@ -1,6 +1,7 @@
 #main epool file
 from flask import Flask, redirect, url_for, render_template, request, session, flash
 from datetime import timedelta
+from user import User
 
 app = Flask(__name__)
 app.secret_key = "kjhdolfuhqwp947rq9hfpiau23r4098"
