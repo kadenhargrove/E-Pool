@@ -12,4 +12,3 @@ class User:
     
     def delete_friend(self, friend):
         self.friendList.remove(friend)
-    
