@@ -75,6 +75,21 @@
 					<!-- /logo -->
                 </div>
 
+                <body>
+                    <h1>E Pool</h1>
+                    <p>Craigslist Uber!</p>
+                    <form action="{{ url_for('login')}}">
+                        <input type="submit" value="Login" />
+                    </form>
+                    <form action="{{ url_for('logout')}}">
+                        <input type="submit" value="Logout" />
+                    </form>
+                    <form action="{{ url_for('user')}}">
+                        <input type="submit" value="Profile" />
+                    </form>
+                </body>
+
+
 				<!-- main nav -->
                 <nav class="collapse navbar-collapse navbar-right" role="navigation">
                     <ul id="nav" class="nav navbar-nav">
