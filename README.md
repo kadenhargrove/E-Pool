@@ -13,7 +13,9 @@ More info at [Flask Installation](https://flask.palletsprojects.com/en/2.2.x/ins
 ```
 pip install flask
 ```
-
+```
+pip install flask-sqlalchemy
+```
 ## Running the App
 ```
 set FLASK_APP=epool.py
