@@ -1,4 +1,6 @@
-{% block title %}Login Page{% endblock %}
+{% block title %}Profile Page{% endblock %}
+
+{% block user %}<p>User {{email if email}}</p>{% endblock %}
 
 {%block content%}
     {% with messages = get_flashed_messages() %}
@@ -8,10 +10,9 @@
             {% endfor %}
         {% endif %}
     {% endwith %}
-<form action="#" method="post">
-    <p>Login:</p>
-    <p><input type ="email" name="email" placeholder="Enter Email"/></p>
-    <p><input type ="submit" value="Submit" /></p>
+
+<form action="{{ url_for('logout')}}">
+    <input type="submit" value="Logout" />
 </form>
 <form action="{{ url_for('home')}}">
     <input type="submit" value="Home" />

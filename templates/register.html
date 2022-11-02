@@ -1,4 +1,4 @@
-{% block title %}User{% endblock %}
+{% block title %}Create an Account{% endblock %}
 
 {%block content%}
     {% with messages = get_flashed_messages() %}
@@ -8,13 +8,10 @@
             {% endfor %}
         {% endif %}
     {% endwith %}
-<form action="#" method="POST">
-    <input type="email" name="email" placeholder="Enter Email" value="{{email if email}}"/>
-    <input type="submit" value="Submit"/>
-</form>
-
-<form action="{{ url_for('logout')}}">
-    <input type="submit" value="Logout" />
+<form action="#" method="post">
+    <p>Register:</p>
+    <p><input type ="email" name="email" placeholder="Enter Email"/></p>
+    <p><input type ="submit" value="Submit" /></p>
 </form>
 <form action="{{ url_for('home')}}">
     <input type="submit" value="Home" />
