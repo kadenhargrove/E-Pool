@@ -1,4 +1,3 @@
 venv 
-__pycache__/epool.cpython-310.pyc
-__pycache__/user.cpython-310.pyc
+__pycache__
 instance/epool.db

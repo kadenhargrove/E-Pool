@@ -66,16 +66,16 @@
                 <body>
                     <h1>E Pool</h1>
                     <p>Craigslist Uber!</p>
-					<form action="{{ url_for('create_account')}}">
+					<form action="{{ url_for('user.create_account')}}">
                         <input type="submit" value="Create Account" />
                     </form>
-                    <form action="{{ url_for('login')}}">
+                    <form action="{{ url_for('user.login')}}">
                         <input type="submit" value="Login" />
                     </form>
-                    <form action="{{ url_for('logout')}}">
+                    <form action="{{ url_for('user.logout')}}">
                         <input type="submit" value="Logout" />
                     </form>
-                    <form action="{{ url_for('profile')}}">
+                    <form action="{{ url_for('user.profile')}}">
                         <input type="submit" value="Profile" />
                     </form>
                 </body>
