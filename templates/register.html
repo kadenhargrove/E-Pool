@@ -21,12 +21,6 @@
   position: relative;
 }
 
-#epoolLogo {
-    background: url_for('static', filename='epoolLogo.png');
-    width: 150px;
-            object-position: 0px 80px;
-}
-
 /* Add styles to the form container */
 .container {
   position: absolute;
@@ -81,9 +75,9 @@ input[type=text]:focus, input[type=password]:focus {
 
 <div class="bg-img">
 
-    <img id="epoolLogo"
-    src=
-    "{{url_for('static', filename='epoolLogo.png')}}"/>
+  <a href="{{ url_for('user.home')}}" target="_blank"> 
+    <img src="{{url_for('static', filename='epoolLogo.png')}}" width = 150> 
+    </a> 
 
     <form action="#" class="container" method = "post">
       <h1>Register</h1>
@@ -100,4 +94,4 @@ input[type=text]:focus, input[type=password]:focus {
         <input type="submit" value="Home" />
     </form> -->
   </div>
-{% endblock %}
+<!-- {% endblock %} -->
