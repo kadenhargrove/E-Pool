@@ -1,5 +1,76 @@
-{% block title %}Create an Account{% endblock %}
+<style>
+    body, html {
+  height: 100%;
+}
 
+* {
+  box-sizing: border-box;
+}
+
+.bg-img {
+  /* The image used */
+  background-image: url("data:image/jpeg;base64,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");
+
+  /* Control the height of the image */
+  min-height: 700px;
+
+  /* Center and scale the image nicely */
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  position: relative;
+}
+
+#epoolLogo {
+    background: url_for('static', filename='epoolLogo.png');
+    width: 150px;
+            object-position: 0px 80px;
+}
+
+/* Add styles to the form container */
+.container {
+  position: absolute;
+  right: 0;
+  margin: 20px;
+  max-width: 300px;
+  padding: 16px;
+  background-color: white;
+}
+
+/* Full-width input fields */
+  input[type=text], input[type=password] {
+  width: 100%;
+  padding: 15px;
+  margin: 5px 0 22px 0;
+  border: none;
+  background: #f1f1f1;
+}
+
+input[type=text]:focus, input[type=password]:focus {
+  background-color: #ddd;
+  outline: none;
+}
+
+/* Set a style for the submit button */
+.btn {
+  background-color: #347ad1;
+  color: white;
+  padding: 16px 20px;
+  border: none;
+  cursor: pointer;
+  width: 100%;
+  opacity: 0.9;
+}
+
+.btn:hover {
+  opacity: 1;
+}
+    </style>
+
+<!-- <br>  -->
+
+
+<!-- <ca>Create an Account:</ca>
 {%block content%}
     {% with messages = get_flashed_messages() %}
         {% if messages %}
@@ -7,13 +78,27 @@
                 <p>{{msg}}</p>
             {% endfor %}
         {% endif %}
-    {% endwith %}
-<form action="#" method="post">
-    <p>Register:</p>
-    <p><input type ="email" name="email" placeholder="Enter Email"/></p>
-    <p><input type ="submit" value="Submit" /></p>
-</form>
-<form action="{{ url_for('home')}}">
-    <input type="submit" value="Home" />
-</form>
+    {% endwith %} -->
+
+<div class="bg-img">
+
+    <img id="epoolLogo"
+    src=
+    "{{url_for('static', filename='epoolLogo.png')}}"/>
+
+    <form action="#" class="container" method = "post">
+      <h1>Register</h1>
+  
+      <label for="email"><b>Email</b></label>
+      <input type="text" placeholder="Enter Email" name="email" required>
+  
+      <label for="psw"><b>Password</b></label>
+      <input type="password" placeholder="Enter Password" name="psw" required>
+  
+      <button type="submit" class="btn">Register</button>
+    </form>
+    <!-- <form action="{{ url_for('home')}}">
+        <input type="submit" value="Home" />
+    </form> -->
+  </div>
 {% endblock %}
