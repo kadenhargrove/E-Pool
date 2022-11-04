@@ -1,4 +1,67 @@
-{% block title %}Login Page{% endblock %}
+<style>
+    body, html {
+  height: 100%;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+.bg-img {
+  /* The image used */
+  background-image: url("{{url_for('static', filename='epoolBackground.png')}}");
+
+  /* Control the height of the image */
+  min-height: 700px;
+
+  /* Center and scale the image nicely */
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  position: relative;
+}
+
+/* Add styles to the form container */
+.container {
+  position: absolute;
+  right: 0;
+  margin: 20px;
+  max-width: 300px;
+  padding: 16px;
+  background-color: white;
+}
+
+/* Full-width input fields */
+  input[type=text], input[type=password] {
+  width: 100%;
+  padding: 15px;
+  margin: 5px 0 22px 0;
+  border: none;
+  background: #f1f1f1;
+}
+
+input[type=text]:focus, input[type=password]:focus {
+  background-color: #ddd;
+  outline: none;
+}
+
+/* Set a style for the submit button */
+.btn {
+  background-color: #347ad1;
+  color: white;
+  padding: 16px 20px;
+  border: none;
+  cursor: pointer;
+  width: 100%;
+  opacity: 0.9;
+}
+
+.btn:hover {
+  opacity: 1;
+}
+    </style>
+
+<!-- {% block title %}Login Page{% endblock %}
 
 {%block content%}
     {% with messages = get_flashed_messages() %}
@@ -7,13 +70,27 @@
                 <p>{{msg}}</p>
             {% endfor %}
         {% endif %}
-    {% endwith %}
-<form action="#" method="post">
-    <p>Login:</p>
-    <p><input type ="email" name="email" placeholder="Enter Email"/></p>
-    <p><input type ="submit" value="Submit" /></p>
-</form>
-<form action="{{ url_for('user.home')}}">
+    {% endwith %} -->
+    <div class="bg-img">
+
+        <a href="{{ url_for('user.home')}}" target="_blank"> 
+          <img src="{{url_for('static', filename='epoolLogo.png')}}" width = 150> 
+          </a> 
+      
+          <form action="#" class="container" method = "post">
+            <h1>Login</h1>
+        
+            <label for="email"><b>Email</b></label>
+            <input type="text" placeholder="Enter Email" name="email" required>
+        
+            <label for="psw"><b>Password</b></label>
+            <input type="password" placeholder="Enter Password" name="psw" required>
+        
+            <button type="submit" class="btn">Login</button>
+          </form>
+<!-- <form action="{{ url_for('user.home')}}">
     <input type="submit" value="Home" />
-</form>
-{% endblock %}
+</form> -->
+</div>
+
+<!-- {% endblock %} -->
