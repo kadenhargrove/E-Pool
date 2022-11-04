@@ -26,7 +26,7 @@
 
 .fancybox-skin {
 	position: relative;
-	background: #f9f9f9;
+	background: #67bbe1;
 	color: #444;
 	text-shadow: none;
 	-webkit-border-radius: 4px;
@@ -39,9 +39,9 @@
 }
 
 .fancybox-opened .fancybox-skin {
-	-webkit-box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
-	   -moz-box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
-	        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+	-webkit-box-shadow: 0 10px 25px rgba(57, 83, 160, 0.5);
+	   -moz-box-shadow: 0 10px 25px rgba(66, 102, 221, 0.5);
+	        box-shadow: 0 10px 25px rgba(112, 84, 188, 0.5);
 }
 
 .fancybox-outer, .fancybox-inner {
@@ -115,7 +115,7 @@
 	cursor: pointer;
 	text-decoration: none;
 	background: transparent url('blank.gif'); /* helps IE */
-	-webkit-tap-highlight-color: rgba(0,0,0,0);
+	-webkit-tap-highlight-color: rgba(14, 158, 64, 0);
 	z-index: 8040;
 }
 
@@ -226,12 +226,12 @@
 	margin-right: -100%;
 	padding: 2px 20px;
 	background: transparent; /* Fallback for web browsers that doesn't support RGBa */
-	background: rgba(0, 0, 0, 0.8);
+	background: rgba(91, 18, 18, 0.8);
 	-webkit-border-radius: 15px;
 	   -moz-border-radius: 15px;
 	        border-radius: 15px;
 	text-shadow: 0 1px 2px #222;
-	color: #FFF;
+	color: rgb(135, 39, 39);
 	font-weight: bold;
 	line-height: 24px;
 	white-space: nowrap;
@@ -240,7 +240,7 @@
 .fancybox-title-outside-wrap {
 	position: relative;
 	margin-top: 10px;
-	color: #fff;
+	color: rgb(136, 14, 14);
 }
 
 .fancybox-title-inside-wrap {
