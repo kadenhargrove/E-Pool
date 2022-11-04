@@ -16,6 +16,9 @@ class User(db.Model):
     def __init__(self, email):
         self.email = email
 
+with app.app_context():
+    db.create_all()
+
 @app.route("/")
 def home():
     return render_template("index.html")
@@ -88,5 +91,4 @@ def admin():
     return redirect(url_for("home"))
 
 if __name__ == "__main__":
-    db.create_all()
     app.run()
