@@ -7,6 +7,36 @@
   box-sizing: border-box;
 }
 
+.alert-error {
+  background-color: rgb(52, 184, 22);
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-size: medium;
+  color: white;
+  width:100%;
+  margin:25px auto;
+  padding: 0.25px;
+  padding-left:15px;
+  position:relative;
+  border-radius:5px;
+  box-shadow:0 0 15px 5px #ccc;
+  text-align:left;
+}
+.close{
+  margin-left: 5px;
+  margin-right: 13px;
+  color: white;
+  font-weight: bold;
+  float: right;
+  font-size: 22px;
+  line-height: 20px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.close:hover {
+  color: black;
+}
+
 .bg-img {
   /* The image used */
   background-image: url("{{url_for('static', filename='epoolBackground.png')}}");
@@ -61,24 +91,24 @@ input[type=text]:focus, input[type=password]:focus {
 }
     </style>
 
-<!-- <ca>Create an Account:</ca>
-{%block content%}
-    {% with messages = get_flashed_messages() %}
-        {% if messages %}
-            {% for msg in messages %}
-                <p>{{msg}}</p>
-            {% endfor %}
-        {% endif %}
-    {% endwith %} -->
-
 <div class="bg-img">
 
-  <a href="{{ url_for('user.home')}}" target="_blank"> 
+  <a href="{{ url_for('user.home')}}"> 
     <img src="{{url_for('static', filename='epoolLogo.png')}}" width = 150> 
     </a> 
 
     <form action="#" class="container" method = "post">
       <h1>Register</h1>
+
+      <div class="alert-error">
+        {% with messages = get_flashed_messages() %}
+            {% if messages %}
+                {% for msg in messages %}
+                    <p>{{msg}} <span class="close" onclick="this.parentElement.style.display='none';">×</span> </p>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+      </div>
   
       <label for="email"><b>Email</b></label>
       <input type="text" placeholder="Enter Email" name="email" required>
@@ -92,4 +122,3 @@ input[type=text]:focus, input[type=password]:focus {
         <input type="submit" value="Home" />
     </form> -->
   </div>
-<!-- {% endblock %} -->

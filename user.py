@@ -50,7 +50,7 @@ class User:
             found_user = Users.query.filter_by(email=user_email).first()
 
             if not found_user:
-                flash("User does not exist, please create an account!")
+                flash("No user found, please sign up!")
                 return redirect(url_for("user.create_account"))
 
             session["user"] = user_email
