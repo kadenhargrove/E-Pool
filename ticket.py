@@ -19,6 +19,7 @@ class Ticket():
     def createTicket(self, info, ticketID):
         if request.method == "POST":
             data_form = request.form["Name", "Location", "Time", "vehicleType"]
+            
 
 
 

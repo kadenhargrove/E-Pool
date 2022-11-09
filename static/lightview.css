@@ -18,7 +18,7 @@
   padding: 0;
   overflow: hidden;
   text-align: left;
-  -webkit-tap-highlight-color: rgba(0,0,0,0);
+  -webkit-tap-highlight-color: rgba(39, 161, 138, 0.489);
 }
 .lv_window, .lv_window [class^="lv_"],
 .lv_overlay, .lv_overlay [class^="lv_"],
