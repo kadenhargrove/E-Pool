@@ -11,10 +11,7 @@ git clone <repo-url>
 It is recommended to install flask into a virtual environment.\
 More info at [Flask Installation](https://flask.palletsprojects.com/en/2.2.x/installation/).
 ```
-pip install flask
-```
-```
-pip install flask-sqlalchemy
+pip install -r requirements.txt
 ```
 ## Running the App
 ```
