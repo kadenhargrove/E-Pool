@@ -2,6 +2,8 @@
 
 from flask import Blueprint, redirect, url_for, render_template, request, session, flash
 from models import Users, db
+from auth import login_manager
+from flask_login import login_required, logout_user, current_user, login_user
 
 user = Blueprint("user", __name__, static_folder="static", template_folder="templates")
 
@@ -26,6 +28,7 @@ class User:
     def create_account():
         if request.method == "POST":
             user_email = request.form["email"]
+            user_password = request.form["psw"]
             found_user = Users.query.filter_by(email=user_email).first()
 
             if found_user:
@@ -34,11 +37,12 @@ class User:
             else:
                 flash("New account created!")
                 usr = Users(email = user_email)
+                usr.set_password(user_password)
                 db.session.add(usr)
                 db.session.commit()
                 return redirect(url_for("user.login"))
         else:
-            if "user" in session:
+            if current_user.is_authenticated:
                 flash("Already Logged In!")
                 return redirect(url_for("user.profile"))
             return render_template("register.html")
@@ -47,40 +51,51 @@ class User:
     def login():
         if request.method == "POST":
             user_email = request.form["email"]
+            user_password = request.form["psw"]
             found_user = Users.query.filter_by(email=user_email).first()
 
             if not found_user:
                 flash("No user found, please sign up!")
                 return redirect(url_for("user.create_account"))
 
-            session["user"] = user_email
-            flash("Login Successful!")
-            return redirect(url_for("user.profile"))
+            if found_user and found_user.check_password(user_password):
+                login_user(found_user)
+                flash("Login Successful!")
+                return redirect(url_for("user.profile"))
+            
+            flash("Password incorrect! Try again.")
+            return render_template("login.html")
         else:
-            if "user" in session:
+            if current_user.is_authenticated:
                 flash("Already Logged In!")
                 return redirect(url_for("user.profile"))
             return render_template("login.html")
 
     @user.route("/profile", methods=["POST", "GET"])
+    @login_required
     def profile():
-        if "user" in session:
-            usr_email = session["user"]
-            usr = Users.query.filter_by(email=usr_email).first()
-            users = Users.query.all()
-            for user in users:
-                print(user.email)
-            return render_template("profile.html", email=usr.email)
-        else:
-            flash("You are not logged in!")
-            return redirect(url_for("user.login"))
+        user_email = current_user.email
+        users = Users.query.all()
+        for user in users:
+            print("Email: " + user.email + " Password: " + user.password)
+        return render_template("profile.html", email=user_email)
 
     @user.route("/logout")
+    @login_required
     def logout():
-        if "user" in session:
-            flash("You have been logged out!", "info")
-            session.pop("user", None)
-            return redirect(url_for("user.login"))
-        else:
-            flash("You must login before logging out!")
-            return redirect(url_for("user.login"))
+        logout_user()
+        flash("You have been logged out!")
+        return redirect(url_for("user.login"))
+    
+    @login_manager.user_loader
+    def load_user(user_id):
+        """Check if user is logged-in on every page load."""
+        if user_id is not None:
+            return Users.query.get(user_id)
+        return None
+
+    @login_manager.unauthorized_handler
+    def unauthorized():
+        """Redirect unauthorized users to Login page."""
+        flash('Please login first!')
+        return redirect(url_for('user.login'))
