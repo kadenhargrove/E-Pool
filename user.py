@@ -34,6 +34,9 @@ class User:
             if found_user:
                 flash("User exists, please login")
                 return redirect(url_for("user.login"))
+            if len(user_password) < 8:
+                flash("Password must be at least 8 characters long!")
+                return render_template("register.html")
             else:
                 flash("New account created!")
                 usr = Users(email = user_email)
