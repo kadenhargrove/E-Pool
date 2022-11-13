@@ -1,124 +1,31 @@
-<style>
-    body, html {
-  height: 100%;
-}
+<link rel="stylesheet" href="{{ url_for('static', filename='alerts.css')}}">
+<link rel="stylesheet" href="{{ url_for('static', filename='loginform.css')}}">
 
-* {
-  box-sizing: border-box;
-}
+<div class="bg-img">
 
-.alert-error {
-  background-color: rgb(52, 184, 22);
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  font-size: medium;
-  color: white;
-  width:100%;
-  margin:25px auto;
-  padding: 0.25px;
-  padding-left:15px;
-  position:relative;
-  border-radius:5px;
-  box-shadow:0 0 15px 5px #ccc;
-  text-align:left;
-}
-.close{
-  margin-left: 5px;
-  margin-right: 13px;
-  color: white;
-  font-weight: bold;
-  float: right;
-  font-size: 22px;
-  line-height: 20px;
-  cursor: pointer;
-  transition: 0.3s;
-}
+  <a href="{{ url_for('user.home')}}"> 
+    <img src="{{url_for('static', filename='epoolLogo.png')}}" width = 150> 
+  </a> 
 
-.close:hover {
-  color: black;
-}
+    <form action="#" class="container" method = "post">
+      <h1>Login</h1>
 
-.bg-img {
-  /* The image used */
-  background-image: url("{{url_for('static', filename='epoolBackground.png')}}");
-
-  /* Control the height of the image */
-  min-height: 700px;
-
-  /* Center and scale the image nicely */
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: cover;
-  position: relative;
-}
-
-/* Add styles to the form container */
-.container {
-  position: absolute;
-  right: 0;
-  margin: 20px;
-  max-width: 300px;
-  padding: 16px;
-  background-color: white;
-}
-
-/* Full-width input fields */
-  input[type=text], input[type=password] {
-  width: 100%;
-  padding: 15px;
-  margin: 5px 0 22px 0;
-  border: none;
-  background: #f1f1f1;
-}
-
-input[type=text]:focus, input[type=password]:focus {
-  background-color: #ddd;
-  outline: none;
-}
-
-/* Set a style for the submit button */
-.btn {
-  background-color: #347ad1;
-  color: white;
-  padding: 16px 20px;
-  border: none;
-  cursor: pointer;
-  width: 100%;
-  opacity: 0.9;
-}
-
-.btn:hover {
-  opacity: 1;
-}
-    </style>
-
-    <div class="bg-img">
-
-        <a href="{{ url_for('user.home')}}"> 
-          <img src="{{url_for('static', filename='epoolLogo.png')}}" width = 150> 
-          </a> 
-      
-          <form action="#" class="container" method = "post">
-            <h1>Login</h1>
-
-            <div class="alert-error">
-              {% with messages = get_flashed_messages() %}
-                  {% if messages %}
-                      {% for msg in messages %}
-                          <p>{{msg}} <span class="close" onclick="this.parentElement.style.display='none';">×</span> </p>
-                      {% endfor %}
-                  {% endif %}
-              {% endwith %}
-            </div>
-        
-            <label for="email"><b>Email</b></label>
-            <input type="text" placeholder="Enter Email" name="email" required>
-        
-            <label for="psw"><b>Password</b></label>
-            <input type="password" placeholder="Enter Password" name="psw" required>
-        
-            <button type="submit" class="btn">Login</button>
-          </form>
-<!-- <form action="{{ url_for('user.home')}}">
-    <input type="submit" value="Home" />
-</form> -->
+      <div class="alert-error">
+        {% with messages = get_flashed_messages() %}
+            {% if messages %}
+                {% for msg in messages %}
+                    <p>{{msg}} <span class="close" onclick="this.parentElement.style.display='none';">×</span> </p>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+      </div>
+  
+      <label for="email"><b>Email</b></label>
+      <input type="text" placeholder="Enter Email" name="email" required>
+  
+      <label for="psw"><b>Password</b></label>
+      <input type="password" placeholder="Enter Password" name="psw" required>
+  
+      <button type="submit" class="btn">Login</button>
+    </form>
 </div>
