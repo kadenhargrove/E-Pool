@@ -32,7 +32,7 @@ class User:
             found_user = Users.query.filter_by(email=user_email).first()
 
             if found_user:
-                flash("User exists, please login", 'error')
+                flash("User exists, please login", 'warning')
                 return redirect(url_for("user.login"))
             if len(user_password) < 8:
                 flash("Password must be at least 8 characters long!", 'warning')
