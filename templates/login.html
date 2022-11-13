@@ -9,16 +9,14 @@
 
     <form action="#" class="container" method = "post">
       <h1>Login</h1>
-
-      <div class="alert-error">
-        {% with messages = get_flashed_messages() %}
-            {% if messages %}
-                {% for msg in messages %}
-                    <p>{{msg}} <span class="close" onclick="this.parentElement.style.display='none';">×</span> </p>
-                {% endfor %}
-            {% endif %}
-        {% endwith %}
-      </div>
+      
+      {% with messages = get_flashed_messages(with_categories=true) %}
+          {% if messages %}
+              {% for category, msg in messages %}
+                  <div class="{{ category }}">{{msg}} <span class="close" onclick="this.parentElement.style.display='none';">×</span> </div>
+              {% endfor %}
+          {% endif %}
+      {% endwith %}
   
       <label for="email"><b>Email</b></label>
       <input type="text" placeholder="Enter Email" name="email" required>

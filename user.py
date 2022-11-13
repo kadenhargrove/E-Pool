@@ -32,13 +32,13 @@ class User:
             found_user = Users.query.filter_by(email=user_email).first()
 
             if found_user:
-                flash("User exists, please login")
+                flash("User exists, please login", 'error')
                 return redirect(url_for("user.login"))
             if len(user_password) < 8:
-                flash("Password must be at least 8 characters long!")
+                flash("Password must be at least 8 characters long!", 'warning')
                 return render_template("register.html")
             else:
-                flash("New account created!")
+                flash("New account created!", 'success')
                 usr = Users(email = user_email)
                 usr.set_password(user_password)
                 db.session.add(usr)
@@ -46,7 +46,7 @@ class User:
                 return redirect(url_for("user.login"))
         else:
             if current_user.is_authenticated:
-                flash("Already Logged In!")
+                flash("Already Logged In!", 'success')
                 return redirect(url_for("user.profile"))
             return render_template("register.html")
 
@@ -58,19 +58,19 @@ class User:
             found_user = Users.query.filter_by(email=user_email).first()
 
             if not found_user:
-                flash("No user found, please sign up!")
+                flash("No user found, please sign up!", 'warning')
                 return redirect(url_for("user.create_account"))
 
             if found_user and found_user.check_password(user_password):
                 login_user(found_user)
-                flash("Login Successful!")
+                flash("Login Successful!", 'success')
                 return redirect(url_for("user.profile"))
             
-            flash("Password incorrect! Try again.")
+            flash("Password incorrect! Try again.", 'warning')
             return render_template("login.html")
         else:
             if current_user.is_authenticated:
-                flash("Already Logged In!")
+                flash("Already Logged In!", 'success')
                 return redirect(url_for("user.profile"))
             return render_template("login.html")
 
@@ -87,7 +87,7 @@ class User:
     @login_required
     def logout():
         logout_user()
-        flash("You have been logged out!")
+        flash("You have been logged out!", 'success')
         return redirect(url_for("user.login"))
     
     @login_manager.user_loader
@@ -100,5 +100,5 @@ class User:
     @login_manager.unauthorized_handler
     def unauthorized():
         """Redirect unauthorized users to Login page."""
-        flash('Please login first!')
+        flash('Please login first!', 'error')
         return redirect(url_for('user.login'))
