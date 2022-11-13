@@ -1,3 +1,102 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+<style>
+    body, html {
+  height: 100%;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+.alert-error {
+  background-color: rgb(52, 184, 22);
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-size: medium;
+  color: white;
+  width:100%;
+  margin:25px auto;
+  padding: 0.25px;
+  padding-left:15px;
+  position:relative;
+  border-radius:5px;
+  box-shadow:0 0 15px 5px #ccc;
+  text-align:left;
+}
+.close{
+  margin-left: 5px;
+  margin-right: 13px;
+  color: white;
+  font-weight: bold;
+  float: right;
+  font-size: 22px;
+  line-height: 20px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.close:hover {
+  color: black;
+}
+
+.bg-img {
+  /* The image used */
+  background-image: url("{{url_for('static', filename='epoolBackground.png')}}");
+
+  /* Control the height of the image */
+  min-height: 700px;
+
+  /* Center and scale the image nicely */
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  position: relative;
+}
+
+/* Add styles to the form container */
+.container {
+  position: absolute;
+  right: 0;
+  margin: 20px;
+  max-width: 300px;
+  padding: 16px;
+  background-color: white;
+}
+
+
+
+.btn:hover {
+  opacity: 1;
+}
+    </style>
+
+<div class="bg-img">
+
+    <a href="{{ url_for('user.Ticket')}}"> 
+      <img src="{{url_for('static', filename='epoolLogo.png')}}" width = 150> 
+      </a> 
+  
+      <form action="#" class="container" method = "post">
+        <h1>Create Ticket</h1>
+        <h2>Delete Ticket</h2>
+        <h3>Modify Ticket</h3>
+
+        <div class="alert-error">
+          {% with messages = get_flashed_messages() %}
+              {% if messages %}
+                  {% for msg in messages %}
+                      <p>{{msg}} <span class="close" onclick="this.parentElement.style.display='none';">×</span> </p>
+                  {% endfor %}
+              {% endif %}
+          {% endwith %}
+        </div>
+</div>
+
+
 {% block title %}Create a Ticket{% endblock %}
 
 {%block content%}
