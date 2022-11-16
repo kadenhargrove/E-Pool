@@ -1,9 +1,14 @@
 #this file initializes the flask app and database
 
+from profile import profile
+
 from flask import Flask
-from user import user
-from models import db
+
 from auth import login_manager
+from models import db
+from ticket import ticket
+from user import user
+
 
 def create_app(db):
     app = Flask(__name__)
@@ -15,6 +20,8 @@ def create_app(db):
     login_manager.init_app(app)
 
     app.register_blueprint(user, url_prefix='')
+    app.register_blueprint(profile, url_prefix='')
+    app.register_blueprint(ticket, url_prefix='')
 
     create_database(app)
 
