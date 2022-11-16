@@ -25,6 +25,11 @@ class Profile:
                 print("First Name: " + user.first_name)
             if user.last_name:
                 print("Last Name: " + user.last_name)
+            if user.bio:
+                print("Bio: " + user.bio)
+            if user.frequent_locations:
+                print("Frequent Locations: " + user.frequent_locations)
+            print()
         return render_template("profile.html", email=user_email, first_name=fname)
 
     @prof.route("/editprofile", methods=["POST", "GET"])
@@ -39,18 +44,16 @@ class Profile:
         if request.method == "POST":
             first_name = request.form["fname"]
             current_user.first_name = first_name
-            db.session.commit()
 
             last_name = request.form["lname"]
             current_user.last_name = last_name
-            db.session.commit()
 
             bio = request.form["bio"]
             current_user.bio = bio
-            db.session.commit()
 
             frequent_locations = request.form["freqLoc"]
             current_user.frequent_locations = frequent_locations
+
             db.session.commit()
 
             return redirect(url_for("profile.profile"))
