@@ -5,7 +5,6 @@ from user import user
 from profile import prof
 from models import db
 from auth import login_manager
-from models import db
 from ticket import ticket
 from user import user
 

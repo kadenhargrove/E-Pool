@@ -60,9 +60,8 @@ class Rider(Users):
     
 class Tickets(db.Model):
     ticketID = db.Column(
-        db.Double,
-        nullable = True,
-        unique=False)
+        db.Integer, 
+        primary_key=True)
         
     ticketDate = db.Column(
         db.String(100),

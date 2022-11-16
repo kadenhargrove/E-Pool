@@ -74,15 +74,6 @@ class User:
                 return redirect(url_for("profile.profile"))
             return render_template("login.html")
 
-    @user.route("/profile", methods=["POST", "GET"])
-    @login_required
-    def profile():
-        user_email = current_user.email
-        users = Users.query.all()
-        for user in users:
-            print("Email: " + user.email + " Password: " + user.password)
-        return render_template("profile.html", email=user_email)
-
     @user.route("/logout")
     @login_required
     def logout():

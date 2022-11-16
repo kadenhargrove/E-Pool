@@ -19,12 +19,16 @@ class Profile:
         fname = current_user.first_name
         users = Users.query.all()
         for user in users:
-            print("Email: " + user.email + " Password: " + user.password)
+            print("Email: " + user.email + "\nPassword: " + user.password)
+            if user.first_name:
+                print("First Name: " + user.first_name)
+            print()
         return render_template("profile.html", email=user_email, first_name=fname)
 
     @prof.route("/editprofile", methods=["POST", "GET"])
     @login_required
     def edit_profile():
+        fname = current_user.first_name
         user_email = current_user.email
         if request.method == "POST":
             first_name = request.form["fname"]
@@ -32,4 +36,4 @@ class Profile:
             db.session.commit()
             return redirect(url_for("profile.profile"))
         else:
-            return render_template("editprofile.html", email=user_email)
+            return render_template("editprofile.html", email=user_email, first_name=fname)

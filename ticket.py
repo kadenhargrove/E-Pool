@@ -1,13 +1,10 @@
-from flask import Flask, redirect, url_for, render_template, request, session, flash
+from flask import Flask, redirect, url_for, render_template, request, session, flash, Blueprint
 from datetime import timedelta
 from flask_sqlalchemy import SQLAlchemy
-from models import Users, db
+from models import Tickets, db
 from user import user
 
-app = Flask(__name__)
-app.secret_key = "kjhdolfuhqwp947rq9hfpiau23r4098"
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///epool.db'
-
+ticket = Blueprint("ticket", __name__, static_folder="static", template_folder="templates")
 
 class Ticket():
 
@@ -16,7 +13,7 @@ class Ticket():
         self.ticketID = ticketID
         self.comment = comment
 
-    @app.route("/CreateTicket", methods=["POST", "GET"])
+    @ticket.route("/CreateTicket", methods=["POST", "GET"])
     def createTicket(self, info, ticketID):
         if request.method == "POST":
             data_form = request.form["Name", "Location", "Time", "vehicleType"]
