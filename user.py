@@ -47,7 +47,7 @@ class User:
         else:
             if current_user.is_authenticated:
                 flash("Already Logged In!", 'success')
-                return redirect(url_for("user.profile"))
+                return redirect(url_for("profile.profile"))
             return render_template("register.html")
 
     @user.route("/login", methods=["POST", "GET"])
@@ -64,24 +64,15 @@ class User:
             if found_user and found_user.check_password(user_password):
                 login_user(found_user)
                 flash("Login Successful!", 'success')
-                return redirect(url_for("user.profile"))
+                return redirect(url_for("profile.profile"))
             
             flash("Password incorrect! Try again.", 'warning')
             return render_template("login.html")
         else:
             if current_user.is_authenticated:
                 flash("Already Logged In!", 'success')
-                return redirect(url_for("user.profile"))
+                return redirect(url_for("profile.profile"))
             return render_template("login.html")
-
-    @user.route("/profile", methods=["POST", "GET"])
-    @login_required
-    def profile():
-        user_email = current_user.email
-        users = Users.query.all()
-        for user in users:
-            print("Email: " + user.email + " Password: " + user.password)
-        return render_template("profile.html", email=user_email)
 
     @user.route("/logout")
     @login_required

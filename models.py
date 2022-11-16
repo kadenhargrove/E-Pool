@@ -21,9 +21,39 @@ class Users(UserMixin, db.Model):
         primary_key=False,
         nullable=False,
         unique=False)
+
+    first_name = db.Column(
+        db.String(100),
+        primary_key=False,
+        nullable=True,
+        unique=False)
+
+    last_name = db.Column(
+        db.String(100),
+        primary_key=False,
+        nullable=True,
+        unique=False)
+
+    bio = db.Column(
+        db.String(200),
+        primary_key=False,
+        nullable=True,
+        unique=False)
     
     def set_password(self, password):
         self.password = generate_password_hash(password, method='sha256') # create hashed password
 
     def check_password(self, password):
         return check_password_hash(self.password, password) # check hashed password
+
+class Driver(Users):
+    driver_rating = db.Column(
+        db.Integer,
+        nullable=True,
+        unique=False)
+
+class Rider(Users):
+    rider_rating = db.Column(
+        db.Integer,
+        nullable=True,
+        unique=False)
