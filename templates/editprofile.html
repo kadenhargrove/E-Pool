@@ -179,12 +179,54 @@ p.ex1{
 
         {% block user %}<p>User {{email if email}}</p>{% endblock %}
 
-        <form action="#" method="post">
-        <label for="firstname">First Name:</label>
-        <input type="text" id="firstname" name="fname" placeholder="Enter Name">
-        <button type="submit">Submit</button>
+        <div class="container">
+            <form action="#" method="post" >
+            <div class="row">
+              <div class="col-25">
+                <label for="fname">First Name</label>
+              </div>
+              <div class="col-75">
+                <input type="text" id="firstname" name="fname" placeholder="Your name..">
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-25">
+                <label for="lname">Last Name</label>
+              </div>
+              <div class="col-75">
+                <input type="text" id="lastname" name="lname" placeholder="Your last name..">
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-25">
+                <label for="freqLoc">Frequent Locations</label>
+              </div>
+              <div class="col-75">
+                <textarea id="frequentlocations" name="freqLoc" placeholder="Enter Locations You Usually Go To.." style="height:100px" ></textarea>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-25">
+                <label for="bio">Bio</label>
+              </div>
+              <div class="col-75">
+                <textarea id="bio" name="bio" placeholder="Enter bio.." style="height:200px" ></textarea>
+              </div>
+            </div>
+            <br>
+            <div class="row">
+              <input type="submit" value="Submit">
+            </div>
+            </form>
 
-        {% block fname %}<p>First Name: {{first_name if first_name}}</p>{% endblock %}
+            <form action="{{ url_for('profile.profile')}}">
+              <input type="submit" value="Cancel" />
+            </form>
+
+          </div>
+          
+
+        {% block profile %}<p> Name: {{first_name if first_name}} {{last_name if last_name}}</p>{% endblock %}
 
         {%block content%}
         {% with messages = get_flashed_messages() %}

@@ -39,6 +39,12 @@ class Users(UserMixin, db.Model):
         primary_key=False,
         nullable=True,
         unique=False)
+        
+    frequent_locations = db.Column(
+        db.String(200),
+        primary_key=False,
+        nullable=True,
+        unique=False)
     
     def set_password(self, password):
         self.password = generate_password_hash(password, method='sha256') # create hashed password

@@ -51,13 +51,13 @@ body {margin:0;font-family:fantasy}
     display: none;
 }
 
-.dropdown {
+.subnav {
     float: left;
     overflow: hidden;
 
 }
 
-.dropdown .dropbtn {
+.subnav .subnavbtn {
     font-size: 17px;    
     border: none;
     outline: none;
@@ -68,7 +68,7 @@ body {margin:0;font-family:fantasy}
     margin: 0;
 }
 
-.dropdown-content {
+.subnav-content {
     display: none;
     position: absolute;
     background-color: #f9f9f9;
@@ -77,7 +77,7 @@ body {margin:0;font-family:fantasy}
     z-index: 1;
 }
 
-.dropdown-content a {
+.subnav-content a {
     float: none;
     color: black;
     padding: 12px 16px;
@@ -87,17 +87,17 @@ body {margin:0;font-family:fantasy}
     
 }
 
-.topnav a:hover, .dropdown:hover .dropbtn {
+.topnav a:hover, .subnav:hover .subnavbtn {
     background-color: #555;
     color: white;
 }
 
-.dropdown-content a:hover {
+.subnav-content a:hover {
     background-color: #ddd;
     color: black;
 }
 
-.dropdown:hover .dropdown-content {
+.subnav:hover .subnav-content {
     display:block;
 }
 
@@ -162,12 +162,20 @@ p.ex1{
         <div class="topnav" id = "myTopnav">
         <a href="{{ url_for('user.home')}}">Home</a>
         <a href="#Ticket">Tickets</a>
-        <a href="{{ url_for('profile.profile')}}" class="active">Profile</a>
-        <div class="dropdown">
-        <button class="dropbtn">More 
+        <!-- <a href="{{ url_for('profile.profile')}}" class="active">Profile</a> -->
+        <div class="subnav">
+            <button class="subnavbtn" >Profile 
+                <i class="fa fa-caret-down"></i>
+            </button>
+            <div class="subnav-content">
+                <a href="{{ url_for('profile.edit_profile')}}">Edit Profile</a>
+            </div>
+            </div>
+        <div class="subnav">
+        <button class="subnavbtn">More 
             <i class="fa fa-caret-down"></i>
         </button>
-        <div class="dropdown-content">
+        <div class="subnav-content">
             <a href="{{ url_for('user.logout')}}">Logout</a>
         </div>
         </div> 
@@ -177,13 +185,17 @@ p.ex1{
     <div style="padding-left:16px" id="insideText">
         {% block title %}Profile Page{% endblock %}
 
-        {% block user %}<p>User {{email if email}}</p>{% endblock %}
+        {% block user %}<p>User: {{email if email}}</p>{% endblock %}
 
-        <form action="{{ url_for('profile.edit_profile')}}">
+        <!-- <form action="{{ url_for('profile.edit_profile')}}">
             <input type="submit" value="Edit Profile" />
-        </form>
+        </form> -->
 
-        {% block fname %}<p>First Name: {{first_name if first_name}}</p>{% endblock %}
+        {% block profile %}<p> Name: {{current_user.first_name}} {{current_user.last_name}}</p>{% endblock %}
+
+        {% block bio %}<p> Bio: {{current_user.bio}} </p>{% endblock %}
+        
+        {% block freqL %}<p> Frequent Locations: {{current_user.frequent_locations}} </p>{% endblock %}
 
         {%block content%}
         {% with messages = get_flashed_messages() %}
