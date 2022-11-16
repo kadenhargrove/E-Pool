@@ -57,3 +57,27 @@ class Rider(Users):
         db.Integer,
         nullable=True,
         unique=False)
+    
+class Tickets(db.Model):
+    ticketID = db.Column(
+        db.Double,
+        nullable = True,
+        unique=False)
+        
+    ticketDate = db.Column(
+        db.String(100),
+        primary_key=False,
+        nullable=True,
+        unique=False)
+    
+    ticketComment = db.Column(
+        db.String(100),
+        primary_key=False,
+        nullable=True,
+        unique=False)
+    
+    
+
+    
+    
+    

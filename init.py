@@ -5,6 +5,10 @@ from user import user
 from profile import prof
 from models import db
 from auth import login_manager
+from models import db
+from ticket import ticket
+from user import user
+
 
 def create_app(db):
     app = Flask(__name__)
@@ -17,6 +21,7 @@ def create_app(db):
 
     app.register_blueprint(user, url_prefix='')
     app.register_blueprint(prof, url_prefix='')
+    app.register_blueprint(ticket, url_prefix='')
 
     create_database(app)
 

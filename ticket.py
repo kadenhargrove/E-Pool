@@ -1,12 +1,13 @@
 from flask import Flask, redirect, url_for, render_template, request, session, flash
 from datetime import timedelta
 from flask_sqlalchemy import SQLAlchemy
+from models import Users, db
+from user import user
 
 app = Flask(__name__)
 app.secret_key = "kjhdolfuhqwp947rq9hfpiau23r4098"
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///epool.db'
 
-import user from User
 
 class Ticket():
 
@@ -21,24 +22,20 @@ class Ticket():
             data_form = request.form["Name", "Location", "Time", "vehicleType"]
             
 
-
-
- 
-
     def deleteTicket(self, ticketID):
-
+        pass
 
 
     def modifyTicket(self, ticketID):
-
+        pass
 
 
     def commentTicket(self, ticketID):
-
+        pass
 
 
     def likePost():
-
+        pass
 
 
         
