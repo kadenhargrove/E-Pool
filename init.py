@@ -2,6 +2,7 @@
 
 from flask import Flask
 from user import user
+from profile import profile
 from models import db
 from auth import login_manager
 
@@ -15,6 +16,7 @@ def create_app(db):
     login_manager.init_app(app)
 
     app.register_blueprint(user, url_prefix='')
+    app.register_blueprint(profile, url_prefix='')
 
     create_database(app)
 
