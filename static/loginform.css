@@ -74,3 +74,9 @@ body, html {
   .delbtn:hover {
     opacity: 1;
   }
+
+  swap {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-size:small;
+    color: #555;
+  }
