@@ -155,3 +155,12 @@ p.ex1{
     max-width: 300px;
     padding: 16px;
   }
+
+.container3 {
+    position: absolute;
+    left: 0;
+    margin: 20px;
+    max-width: 300px;
+    padding: 16px;
+    background-color: white;
+}

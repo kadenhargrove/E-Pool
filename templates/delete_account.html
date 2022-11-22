@@ -5,6 +5,7 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <link rel="stylesheet" href="{{ url_for('static', filename='alerts.css')}}">
 <link rel="stylesheet" href="{{ url_for('static', filename='main.css')}}">
+<link rel="stylesheet" href="{{ url_for('static', filename='loginform.css')}}">
 
 <body>
 
@@ -42,7 +43,7 @@
         <a href="javascript:void(0);" style="font-size:15px;" class="icon" onclick="myFunction()">&#9776;</a>
     </div>
     
-    <div class= "container" style="padding-left:16px" id="insideText">
+    <div class= "container3" style="padding-left:16px" id="insideText">
         {% with messages = get_flashed_messages(with_categories=true) %}
           {% if messages %}
               {% for category, msg in messages %}
@@ -51,19 +52,19 @@
           {% endif %}
       {% endwith %}
 
-        <h2>Profile</h2>
+        <h2>Delete Account?</h2>
 
-        {% block user %}<p>User: {{current_user.email}}</p>{% endblock %}
+        <p>All user data for {{current_user.email}} will be deleted from E-Pool.</p>
 
-        <!-- <form action="{{ url_for('profile.edit_profile')}}">
-            <input type="submit" value="Edit Profile" />
-        </form> -->
+        <form action="#" method = "post">
+            <input type="password" placeholder="Enter Password" name="psw1" required>
+            <input type="password" placeholder="Re-enter Password" name="psw2" required>
+            <button type="submit" class="delbtn">Delete Account</button>
+        </form>
 
-        {% block profile %}<p> Name: {{current_user.first_name}} {{current_user.last_name}}</p>{% endblock %}
-
-        {% block bio %}<p> Bio: {{current_user.bio}} </p>{% endblock %}
-        
-        {% block freqL %}<p> Frequent Locations: {{current_user.frequent_locations}} </p>{% endblock %}
+        <form action="{{ url_for('profile.profile')}}">
+            <button type="submit" class="btn">Cancel</button>
+        </form>
     </div>
     </div>
     

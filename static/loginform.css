@@ -58,3 +58,19 @@ body, html {
   .btn:hover {
     opacity: 1;
   }
+
+  /* Set a style for the delete account button */
+  .delbtn {
+    background-color: #db110a;
+    color: white;
+    padding: 16px 20px;
+    margin-bottom: 10px;
+    border: none;
+    cursor: pointer;
+    width: 100%;
+    opacity: 0.9;
+  }
+  
+  .delbtn:hover {
+    opacity: 1;
+  }
