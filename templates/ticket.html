@@ -96,27 +96,3 @@
         </div>
 </div>
 
-<link rel="stylesheet" href="{{ url_for('static', filename='Ticketform.css')}}">
-<a href="{{ url_for('Ticket.CreateTicket')}}"> 
-{% block title %}CreateTicket{% endblock %}
-
-{%block content%}
-    {% with messages = get_flashed_messages() %}
-        {% if messages %}
-            {% for msg in messages %}
-                <p>{{msg}}</p>
-            {% endfor %}
-        {% endif %}
-    {% endwith %}
-<form action="/dataform" method="post">
-    <p>Ticket:</p>
-    <p><input type ="Name" name="Fullname" placeholder="Enter Fullname"/></p>
-    <p><input type ="Location" name="PickupLocation" placeholder="Enter PickupLocation"/></p>
-    <p><input type ="Time" name="Time" placeholder="Enter Time"/></p>
-    <p><input type ="vehicleType " name="vehicleType" placeholder="Enter vehicleType"/></p>
-    <p><input type ="submit" value="Submit" /></p>
-</form>
-<form action="{{ url_for('Ticket.CreateTicket')}}">
-    <input type="submit" value="Home" />
-</form>
-{% endblock %}
