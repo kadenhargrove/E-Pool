@@ -4,7 +4,7 @@
     font-size: medium;
     color: white;
     width:100%;
-    margin:25px auto;
+    margin-bottom: 25px;
     padding: 10px;
     padding-left:15px;
     position:relative;
@@ -19,7 +19,7 @@
     font-size: medium;
     color: white;
     width:100%;
-    margin:25px auto;
+    margin-bottom: 25px;
     padding: 10px;
     padding-left:15px;
     position:relative;
@@ -34,7 +34,7 @@
     font-size: medium;
     color: white;
     width:100%;
-    margin:25px auto;
+    margin-bottom: 25px;
     padding: 10px;
     padding-left:15px;
     position:relative;

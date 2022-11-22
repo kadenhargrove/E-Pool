@@ -3,6 +3,7 @@
 <head>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="{{ url_for('static', filename='alerts.css')}}">
 <style>
 body {margin:0;font-family:fantasy}
 
@@ -148,6 +149,15 @@ p.ex1{
 #insideText {
     color:#555;
 }
+
+.container {
+    position: absolute;
+    left: 0;
+    margin: 20px;
+    max-width: 300px;
+    padding: 16px;
+    background-color: white;
+  }
 </style>
 
 <body>
@@ -182,7 +192,15 @@ p.ex1{
         <a href="javascript:void(0);" style="font-size:15px;" class="icon" onclick="myFunction()">&#9776;</a>
     </div>
     
-    <div style="padding-left:16px" id="insideText">
+    <div class= "container" style="padding-left:16px" id="insideText">
+        {% with messages = get_flashed_messages(with_categories=true) %}
+          {% if messages %}
+              {% for category, msg in messages %}
+                  <div class="{{ category }}">{{msg}} <span class="close" onclick="this.parentElement.style.display='none';">×</span> </div>
+              {% endfor %}
+          {% endif %}
+      {% endwith %}
+
         {% block title %}Profile Page{% endblock %}
 
         {% block user %}<p>User: {{email if email}}</p>{% endblock %}
@@ -196,16 +214,6 @@ p.ex1{
         {% block bio %}<p> Bio: {{current_user.bio}} </p>{% endblock %}
         
         {% block freqL %}<p> Frequent Locations: {{current_user.frequent_locations}} </p>{% endblock %}
-
-        {%block content%}
-        {% with messages = get_flashed_messages() %}
-            {% if messages %}
-                {% for msg in messages %}
-                    <p>{{msg}}</p>
-                {% endfor %}
-            {% endif %}
-        {% endwith %}
-        {% endblock %}
     </div>
     </div>
     
