@@ -26,6 +26,7 @@ class Profile:
             print()
         return render_template("profile.html", email=user_email, first_name=fname)
 
+    # method for edit profile and create profile
     @prof.route("/editprofile", methods=["POST", "GET"])
     @login_required
     def edit_profile():
@@ -64,3 +65,8 @@ class Profile:
             return redirect(url_for("profile.profile"))
         else:
             return render_template("editprofile.html", email=user_email, first_name=fname, last_name=lname, bio=bio, frequent_locations=freqLoc)
+
+    @prof.route("/deleteaccount", methods=["POST", "GET"])
+    @login_required
+    def delete_account():
+        return render_template("delete_account.html")
