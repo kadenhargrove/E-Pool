@@ -5,6 +5,7 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <link rel="stylesheet" href="{{ url_for('static', filename='alerts.css')}}">
 <link rel="stylesheet" href="{{ url_for('static', filename='main.css')}}">
+<link rel="stylesheet" href="{{ url_for('static', filename='loginform.css')}}">
 
 <body>
 
@@ -42,7 +43,7 @@
         <a href="javascript:void(0);" style="font-size:15px;" class="icon" onclick="myFunction()">&#9776;</a>
     </div>
     
-    <div class= "container" style="padding-left:16px" id="insideText">
+    <div class= "container2" style="padding-left:16px" id="insideText">
         {% with messages = get_flashed_messages(with_categories=true) %}
           {% if messages %}
               {% for category, msg in messages %}
@@ -53,17 +54,17 @@
 
         <h2>Profile</h2>
 
-        {% block user %}<p>User: {{current_user.email}}</p>{% endblock %}
-
-        <!-- <form action="{{ url_for('profile.edit_profile')}}">
-            <input type="submit" value="Edit Profile" />
-        </form> -->
-
-        {% block profile %}<p> Name: {{current_user.first_name}} {{current_user.last_name}}</p>{% endblock %}
-
-        {% block bio %}<p> Bio: {{current_user.bio}} </p>{% endblock %}
-        
-        {% block freqL %}<p> Frequent Locations: {{current_user.frequent_locations}} </p>{% endblock %}
+        {% if current_user.first_name == None and current_user.last_name == None and current_user.bio == None and current_user.frequent_locations == None %}
+            <p>User: {{current_user.email}}</p>
+            <form action="{{ url_for('profile.edit_profile')}}">
+                <button type="submit" class="btn">Create Profile!</button>
+            </form>
+        {% else %}
+            <p>User: {{current_user.email}}</p>
+            <p> Name: {{current_user.first_name}} {{current_user.last_name}}</p>
+            <p> Bio: {{current_user.bio}} </p>
+            <p> Frequent Locations: {{current_user.frequent_locations}} </p>
+        {% endif %}
     </div>
     </div>
     
