@@ -168,9 +168,12 @@ p.ex1{
             <i class="fa fa-caret-down"></i>
         </button>
         <div class="dropdown-content">
-            <a href="{{ url_for('user.create_account')}}">Create Account</a>
-            <a href="{{ url_for('user.login')}}">Login</a>
-            <a href="{{ url_for('user.logout')}}">Logout</a>
+            {% if current_user.is_authenticated %}
+                <a href="{{ url_for('user.logout')}}">Logout</a>
+            {% else %}
+                <a href="{{ url_for('user.create_account')}}">Create Account</a>
+                <a href="{{ url_for('user.login')}}">Login</a>
+            {% endif %}
         </div>
         </div> 
         <a href="javascript:void(0);" style="font-size:15px;" class="icon" onclick="myFunction()">&#9776;</a>

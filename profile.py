@@ -43,16 +43,20 @@ class Profile:
 
         if request.method == "POST":
             first_name = request.form["fname"]
-            current_user.first_name = first_name
+            if first_name != '':
+                current_user.first_name = first_name
 
             last_name = request.form["lname"]
-            current_user.last_name = last_name
+            if last_name != '':
+                current_user.last_name = last_name
 
             bio = request.form["bio"]
-            current_user.bio = bio
+            if bio != '':
+                current_user.bio = bio
 
             frequent_locations = request.form["freqLoc"]
-            current_user.frequent_locations = frequent_locations
+            if frequent_locations != '':
+                current_user.frequent_locations = frequent_locations
 
             db.session.commit()
 

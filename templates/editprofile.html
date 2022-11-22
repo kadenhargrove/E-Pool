@@ -175,9 +175,7 @@ p.ex1{
     </div>
     
     <div style="padding-left:16px" id="insideText">
-        {% block title %}Profile Page{% endblock %}
-
-        {% block user %}<p>User {{email if email}}</p>{% endblock %}
+        {% block title %}Edit Profile{% endblock %}
 
         <div class="container">
             <form action="#" method="post" >
@@ -224,9 +222,6 @@ p.ex1{
             </form>
 
           </div>
-          
-
-        {% block profile %}<p> Name: {{first_name if first_name}} {{last_name if last_name}}</p>{% endblock %}
 
         {%block content%}
         {% with messages = get_flashed_messages() %}

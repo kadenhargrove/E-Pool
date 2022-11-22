@@ -1,6 +1,6 @@
 #this file contains the parent class for the different epool users (drivers and riders)
 
-from flask import Blueprint, redirect, url_for, render_template, request, session, flash
+from flask import Blueprint, redirect, url_for, render_template, request, flash
 from models import Users, db
 from auth import login_manager
 from flask_login import login_required, logout_user, current_user, login_user
@@ -82,10 +82,10 @@ class User:
         return redirect(url_for("user.login"))
     
     @login_manager.user_loader
-    def load_user(user_id):
+    def load_user(id):
         """Check if user is logged-in on every page load."""
-        if user_id is not None:
-            return Users.query.get(user_id)
+        if id is not None:
+            return Users.query.get(id)
         return None
 
     @login_manager.unauthorized_handler
