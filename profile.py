@@ -1,18 +1,12 @@
 # This files contains the profile class that contains user information
 
-from flask import Blueprint, redirect, url_for, render_template, request, session, flash
+from flask import Blueprint, redirect, url_for, render_template, request, flash
 from models import Users, db
-from flask_login import login_required, logout_user, current_user, login_user
+from flask_login import login_required, current_user
 
 prof = Blueprint("profile", __name__, static_folder="static", template_folder="templates")
 
 class Profile:
-    def __init__(self, first_name, last_name, bio, frequent_locations):
-        self.first_name = first_name
-        self.last_name = last_name
-        self.bio = bio
-        self.frequent_locations = frequent_locations
-
     @prof.route("/profile", methods=["POST", "GET"])
     @login_required
     def profile():
@@ -42,24 +36,31 @@ class Profile:
         freqLoc = current_user.frequent_locations
 
         if request.method == "POST":
+            changed = False
+
             first_name = request.form["fname"]
             if first_name != '':
                 current_user.first_name = first_name
+                changed = True
 
             last_name = request.form["lname"]
             if last_name != '':
                 current_user.last_name = last_name
+                changed = True
 
             bio = request.form["bio"]
             if bio != '':
                 current_user.bio = bio
+                changed = True
 
             frequent_locations = request.form["freqLoc"]
             if frequent_locations != '':
                 current_user.frequent_locations = frequent_locations
-
-            db.session.commit()
-
+                changed = True
+            
+            if changed:
+                flash("Profile updated successfully!", 'success')
+                db.session.commit()
             return redirect(url_for("profile.profile"))
         else:
             return render_template("editprofile.html", email=user_email, first_name=fname, last_name=lname, bio=bio, frequent_locations=freqLoc)

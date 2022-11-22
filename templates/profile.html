@@ -139,6 +139,12 @@ h1 {
     margin-top: auto;
 }
 
+h2 {
+    color: #555;
+    margin-bottom: 0;
+    margin-top: 0;
+}
+
 p.ex1{
     color: #555;
     font-family: fantasy;
@@ -178,9 +184,13 @@ p.ex1{
                 <i class="fa fa-caret-down"></i>
             </button>
             <div class="subnav-content">
-                <a href="{{ url_for('profile.edit_profile')}}">Edit Profile</a>
+                {% if current_user.first_name == None and current_user.last_name == None and current_user.bio == None and current_user.frequent_locations == None %}
+                    <a href="{{ url_for('profile.edit_profile')}}">Create Profile</a>
+                {% else %}
+                    <a href="{{ url_for('profile.edit_profile')}}">Edit Profile</a>
+                {% endif %}
             </div>
-            </div>
+        </div>
         <div class="subnav">
         <button class="subnavbtn">More 
             <i class="fa fa-caret-down"></i>
@@ -201,7 +211,7 @@ p.ex1{
           {% endif %}
       {% endwith %}
 
-        {% block title %}Profile Page{% endblock %}
+        <h2>Profile</h2>
 
         {% block user %}<p>User: {{email if email}}</p>{% endblock %}
 

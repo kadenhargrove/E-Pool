@@ -8,18 +8,6 @@ from flask_login import login_required, logout_user, current_user, login_user
 user = Blueprint("user", __name__, static_folder="static", template_folder="templates")
 
 class User:
-    def __init__(self, username, password):
-        self.username = username
-        self.password = password
-        self.myTickets = []
-        self.friendList = []
-
-    def add_friend(self, friend):
-        self.friendList.append(friend)
-    
-    def delete_friend(self, friend):
-        self.friendList.remove(friend)
-
     @user.route("/")
     def home():
         return render_template("index.html")
