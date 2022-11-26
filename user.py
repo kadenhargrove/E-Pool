@@ -11,7 +11,7 @@ class User:
     @user.route("/")
     @user.route("home")
     def home():
-        tickets = Tickets.query.all()
+        tickets = Tickets.query.order_by(Tickets.id.desc()).all()
         return render_template("index.html", posts=tickets)
 
     @user.route("/register", methods=["POST", "GET"])

@@ -20,7 +20,8 @@ class Ticket():
 
     @ticketClass.route("/ticket")
     def ticket():
-        return render_template("ticket.html")  
+        tickets = Tickets.query.order_by(Tickets.id.desc()).all()
+        return render_template("ticket.html", posts=tickets)  
 
     @ticketClass.route("/createticket", methods=["POST", "GET"])
     @login_required

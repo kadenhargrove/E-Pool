@@ -8,7 +8,7 @@
 
 <style>
     .btn {
-    background-color: #045daa; /* Green */
+    background-color: #045daa; 
     border: none;
     color: white;
     padding: 15px;
@@ -56,7 +56,22 @@
         <form action="{{ url_for('ticket.create_ticket')}}">
             <button type="submit" class="btn">Create Ticket!</button>
         </form>
-        <p></p>
+        <p>
+        {% for post in posts %}
+        {% if post.author == current_user.email %}
+        <article class="media content-section">
+          <div class="media-body">
+            <div class="article-metadata">
+              <a class="mr-2" href="#">{{ post.author }}</a>
+              <small class="text-muted">{{ post.date_posted.strftime('%Y-%m-%d') }}</small>
+            </div>
+            <h2><a class="article-title" href="{{ url_for('ticket.post', post_id=post.id) }}">{{ post.title }}</a></h2>
+            <p class="article-content">{{ post.content }}</p>
+          </div>
+        </article>
+        {% endif %}
+    {% endfor %}
+        </p>
     </div>
     </div>
 
