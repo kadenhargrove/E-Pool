@@ -1,7 +1,7 @@
 #this file contains the parent class for the different epool users (drivers and riders)
 
 from flask import Blueprint, redirect, url_for, render_template, request, flash
-from models import Users, db
+from models import Users, Tickets,db
 from auth import login_manager
 from flask_login import login_required, logout_user, current_user, login_user
 
@@ -9,8 +9,10 @@ user = Blueprint("user", __name__, static_folder="static", template_folder="temp
 
 class User:
     @user.route("/")
+    @user.route("home")
     def home():
-        return render_template("index.html")
+        tickets = Tickets.query.all()
+        return render_template("index.html", posts=tickets)
 
     @user.route("/register", methods=["POST", "GET"])
     def create_account():

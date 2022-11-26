@@ -17,7 +17,7 @@
         <!-- <p class="ex1">Craigslist Uber!</p> -->
         <div class="topnav" id = "myTopnav">
         <a href="{{ url_for('user.home')}}" class="active">Home</a>
-        <a href="#Ticket">Tickets</a>
+        <a href="{{ url_for('ticket.ticket')}}">Tickets</a>
         <a href="{{ url_for('profile.profile')}}">Profile</a>
         <a href="{{ url_for('user.friends')}}">Friends</a>
         <div class="subnav">
@@ -40,6 +40,18 @@
         <h2>Welcome to E-Pool</h2>
         <p>Newly and Improved Craigslist Uber</p>
         <p></p>
+        {% for post in posts %}
+        <article class="media content-section">
+          <div class="media-body">
+            <div class="article-metadata">
+              <a class="mr-2" href="#">{{ post.author }}</a>
+              <small class="text-muted">{{ post.date_posted.strftime('%Y-%m-%d') }}</small>
+            </div>
+            <h2><a class="article-title" href="{{ url_for('ticket.post', post_id=post.id) }}">{{ post.title }}</a></h2>
+            <p class="article-content">{{ post.content }}</p>
+          </div>
+        </article>
+    {% endfor %}
     </div>
     </div>
 

@@ -8,7 +8,7 @@
 <link rel="stylesheet" href="{{ url_for('static', filename='loginform.css')}}">
 
 <body>
-
+ 
     <div class="bg-img">
         <h1>
         <a href="{{ url_for('user.home')}}"> 
@@ -18,7 +18,7 @@
         <!-- <p class="ex1">Craigslist Uber!</p> -->
         <div class="topnav" id = "myTopnav">
         <a href="{{ url_for('user.home')}}">Home</a>
-        <a href="#Ticket">Tickets</a>
+        <a href="{{ url_for('ticket.ticket')}}">Tickets</a>
         <!-- <a href="{{ url_for('profile.profile')}}" class="active">Profile</a> -->
         <div class="subnav">
             <button class="subnavbtn" >Profile 
