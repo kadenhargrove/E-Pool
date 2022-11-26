@@ -2,6 +2,7 @@
 
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import UserMixin
+from datetime import datetime
 from werkzeug.security import generate_password_hash, check_password_hash
 
 db = SQLAlchemy()
@@ -65,24 +66,12 @@ class Rider(Users):
         unique=False)
     
 class Tickets(db.Model):
-    ticketID = db.Column(
-        db.Integer, 
-        primary_key=True)
-        
-    ticketDate = db.Column(
-        db.String(100),
-        primary_key=False,
-        nullable=True,
-        unique=False)
-    
-    ticketComment = db.Column(
-        db.String(100),
-        primary_key=False,
-        nullable=True,
-        unique=False)
-    
-    
+    id = db.Column(db.Integer, primary_key=True)
+    title = db.Column(db.String(100), nullable=False)
+    date_posted = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
+    content = db.Column(db.Text, nullable=False)
+    #user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    author = db.Column(db.String(100), nullable=False)
 
-    
-    
-    
+    def __repr__(self):
+        return f"Post('{self.title}', '{self.date_posted}')"

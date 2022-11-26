@@ -1,68 +1,83 @@
-from flask import Flask, redirect, url_for, render_template, request, session, flash, Blueprint
+from flask import Flask, redirect, url_for, render_template, request, session, flash, abort,Blueprint
 from datetime import timedelta
 from flask_sqlalchemy import SQLAlchemy
 from models import Tickets, db
 from user import user
+from flask_login import login_required, current_user, logout_user
+from flask_wtf import FlaskForm
+from flask_wtf.file import FileField, FileAllowed
+from wtforms import StringField, PasswordField, SubmitField, BooleanField, TextAreaField
+from wtforms.validators import DataRequired, Length, Email, EqualTo, ValidationError
 
-ticket = Blueprint("ticket", __name__, static_folder="static", template_folder="templates")
+ticketClass = Blueprint("ticket", __name__, static_folder="static", template_folder="templates")
+
+class PostForm(FlaskForm):
+    title = StringField('Title', validators=[DataRequired()])
+    content = TextAreaField('Content', validators=[DataRequired()])
+    submit = SubmitField('Post')
 
 class Ticket():
 
-    def __init__(self, info, ticketID, comment):
-        self.info = info
-        self.ticketID = ticketID
-        self.comment = comment
+    @ticketClass.route("/ticket")
+    def ticket():
+        return render_template("ticket.html")  
 
-    @ticket.route("/CreateTicket", methods=["POST", "GET"])
-    def createTicket(self, info, ticketID):
-        if request.method == "POST":
-            data_form = request.form["Name", "Location", "Time", "vehicleType"]
-            
-    @ticket.route("/deleteTicket", methods=["POST", "GET"])
-    def deleteTicket(self, ticketID):
-        
-        """
-        delete the item in the database that matches the specified
-        id in the url
-        """
-        qry = db.query(ticketID).filter(
-        ticket.id==id)
-        ticket = qry.first()
+    @ticketClass.route("/createticket", methods=["POST", "GET"])
+    @login_required
+    def create_ticket():
+        form = PostForm()
+        if form.validate_on_submit():
+            post = Tickets(title=form.title.data, content=form.content.data, author=current_user.email)
+            db.session.add(post)
+            db.session.commit()
+            flash('Your post has been created!', 'success')
+            return redirect(url_for('user.home'))
+        return render_template("create_ticket.html", title='New Ticket', form = form, legend = "New Ticket")
 
-        if ticket:
-            data_form = request.form(formdata=request.form, obj=ticket)
-            if request.method == 'POST' and data_form.validate():
-                # delete the item from the database
-                db.delete(ticket)
-                db.commit()
+    @ticketClass.route("/post/<int:post_id>")
+    def post(post_id):
+        post = Tickets.query.get_or_404(post_id)
+        return render_template('post.html', title=post.title, post=post)
 
-                flash('ticket deleted successfully')
-            
+    @ticketClass.route("/post/<int:post_id>/update", methods=["POST", "GET"])
+    @login_required
+    def update_post(post_id):
+        post = Tickets.query.get_or_404(post_id)
+        if post.author != current_user.email:
+            abort(403)
+        form = PostForm()
+        if form.validate_on_submit():
+            post.title = form.title.data
+            post.content = form.content.data
+            db.session.commit()
+            flash('Your post has been updated!', 'success')
+            return redirect(url_for('ticket.post', post_id=post.id))
+        elif request.method == 'GET':
+            form.title.data = post.title
+            form.content.data = post.content
+        return render_template("create_ticket.html", title='Update Ticket', form = form, legend="Update Ticket")
 
-    @ticket.route("/modifyTicket", methods=["POST", "GET"])
-    def modifyTicket(self, ticketID):
-        qry = db.query(ticketID).filter(
-        ticket.id==id)
-        ticket = qry.first()
-
-        if ticket:
-            data_form = request.form(formdata=request.form, obj=ticket)
-            if request.method == 'POST' and data_form.validate():
-                # modify ticket form database
-                data_form = request.form["Name", "Location", "Time", "vehicleType"]
+    @ticketClass.route("/post/<int:post_id>/delete", methods=["POST", "GET"])
+    @login_required
+    def delete_post(post_id):
+        post = Tickets.query.get_or_404(post_id)
+        if post.author != current_user.email:
+            abort(403)
+        db.session.delete(post)
+        db.session.commit()
+        flash('Your post has been deleted!', 'success')
+        return redirect(url_for('user.home'))
                 
+    # @ticket.route("/commentTicket", methods=["POST", "GET"])
+    # def commentTicket(self, ticketID):
+    #     qry = db.query(ticketID).filter(
+    #     ticket.id==id)
+    #     ticket = qry.first()
         
 
-    @ticket.route("/commentTicket", methods=["POST", "GET"])
-    def commentTicket(self, ticketID):
-        qry = db.query(ticketID).filter(
-        ticket.id==id)
-        ticket = qry.first()
-        
-
-    @ticket.route("/likePost", methods=["POST", "GET"])
-    def likePost():
-        pass
+    # @ticket.route("/likePost", methods=["POST", "GET"])
+    # def likePost():
+    #     pass
 
 
         
