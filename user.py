@@ -71,6 +71,11 @@ class User:
         flash("You have been logged out!", 'success')
         return redirect(url_for("user.login"))
     
+    @user.route("/friends")
+    @login_required
+    def friends():
+        return render_template("friends.html")
+
     @login_manager.user_loader
     def load_user(id):
         """Check if user is logged-in on every page load."""

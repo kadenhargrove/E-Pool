@@ -16,10 +16,10 @@
         </h1>
         <!-- <p class="ex1">Craigslist Uber!</p> -->
         <div class="topnav" id = "myTopnav">
-        <a href="{{ url_for('user.home')}}" class="active">Home</a>
-        <a href="{{ url_for('ticket.ticket')}}">Tickets</a>
+        <a href="{{ url_for('user.home')}}">Home</a>
+        <a href="#Ticket">Tickets</a>
         <a href="{{ url_for('profile.profile')}}">Profile</a>
-        <a href="{{ url_for('user.friends')}}">Friends</a>
+        <a href="#Friends" class="active">Friends</a>
         <div class="subnav">
         <button class="subnavbtn">More 
             <i class="fa fa-caret-down"></i>
@@ -36,34 +36,18 @@
         <a href="javascript:void(0);" style="font-size:15px;" class="icon" onclick="myFunction()">&#9776;</a>
         </div>
     
-    <div style="padding-left:16px" id="insideText">
-
-        <div class= "mainflashcontainer">
+        <div class= "container2" style="padding-left:16px" id="insideText">
             {% with messages = get_flashed_messages(with_categories=true) %}
-                {% if messages %}
-                    {% for category, msg in messages %}
-                        <div class="{{ category }}">{{msg}} <span class="close" onclick="this.parentElement.style.display='none';">×</span> </div>
-                    {% endfor %}
-                {% endif %}
-            {% endwith %}
-        </div>
+              {% if messages %}
+                  {% for category, msg in messages %}
+                      <div class="{{ category }}">{{msg}} <span class="close" onclick="this.parentElement.style.display='none';">×</span> </div>
+                  {% endfor %}
+              {% endif %}
+          {% endwith %}
+    
+            <h2>Friends</h2>
 
-        <h2>Welcome to E-Pool</h2>
-        <p>Newly and Improved Craigslist Uber</p>
-        <p></p>
-        {% for post in posts %}
-        <article class="media content-section">
-          <div class="media-body">
-            <div class="article-metadata">
-              <a class="mr-2" href="#">{{ post.author }}</a>
-              <small class="text-muted">{{ post.date_posted.strftime('%Y-%m-%d') }}</small>
-            </div>
-            <h2><a class="article-title" href="{{ url_for('ticket.post', post_id=post.id) }}">{{ post.title }}</a></h2>
-            <p class="article-content">{{ post.content }}</p>
-          </div>
-        </article>
-    {% endfor %}
-    </div>
+        </div>
     </div>
 
     <script>
