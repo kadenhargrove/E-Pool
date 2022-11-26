@@ -37,6 +37,17 @@
         </div>
     
     <div style="padding-left:16px" id="insideText">
+
+        <div class= "mainflashcontainer">
+            {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                    {% for category, msg in messages %}
+                        <div class="{{ category }}">{{msg}} <span class="close" onclick="this.parentElement.style.display='none';">×</span> </div>
+                    {% endfor %}
+                {% endif %}
+            {% endwith %}
+        </div>
+
         <h2>Welcome to E-Pool</h2>
         <p>Newly and Improved Craigslist Uber</p>
         <p></p>
