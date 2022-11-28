@@ -55,6 +55,10 @@
         <h2>E-Pool Tickets</h2>
         <form action="{{ url_for('ticket.create_ticket')}}">
             <button type="submit" class="btn">Create Ticket!</button>
+            <button type="submit" class="btn">Delete Ticket</button>
+            <button type="submit" class="btn">Modify Ticket</button>
+        </form>
+       
         </form>
         <p>
         {% for post in posts %}
@@ -72,6 +76,7 @@
         {% endif %}
     {% endfor %}
         </p>
+       
     </div>
     </div>
 
