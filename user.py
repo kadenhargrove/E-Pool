@@ -20,9 +20,10 @@ class User:
             user_email = request.form["email"]
             user_name = request.form["usrnm"]
             user_password = request.form["psw"]
-            found_user = Users.query.filter_by(email=user_email).first()
+            found_email = Users.query.filter_by(email=user_email).first()
+            found_username = Users.query.filter_by(username=user_name).first()
 
-            if found_user:
+            if found_email or found_username:
                 flash("User exists, please login", 'warning')
                 return redirect(url_for("user.login"))
             if len(user_password) < 8:

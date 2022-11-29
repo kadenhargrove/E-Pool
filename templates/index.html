@@ -55,7 +55,7 @@
         <article class="media content-section">
           <div class="media-body">
             <div class="article-metadata">
-              {% if post.author == current_user.username%}
+              {% if post.author == current_user.username %}
                 <a class="mr-2" href="{{ url_for('profile.profile')}}">{{ post.author }}</a>
               {% else %}
                 <a class="mr-2" href="{{ url_for('profile.other', username=post.author )}}">{{ post.author }}</a>
