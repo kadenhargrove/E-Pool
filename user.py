@@ -83,7 +83,7 @@ class User:
         for user in users:
             usernames.append(user.username)
             for friends in friendships:
-                if user.username == friends.friend_username and user.username != current_user:
+                if friends.friender_username == current_user.username and user.username == friends.friend_username and user.username != current_user.username:
                     the_friends.append(user.username)
 
         the_others = set(usernames) - set(the_friends)

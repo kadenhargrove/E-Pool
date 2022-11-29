@@ -101,6 +101,10 @@ class Profile:
             if found_friendship:
                 flash("Already friends!", 'success')
                 return redirect(url_for("user.friends"))
+                
+            elif the_user == current_user:
+                    flash('Cannot friend self!', 'warning')
+                    return redirect(url_for("user.friends"))
             else:
                 friendship = Friends(friender_username=current_user.username, friend_username = username)
                 db.session.add(friendship)
