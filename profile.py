@@ -123,7 +123,9 @@ class Profile:
                     return redirect(url_for("user.friends"))
             else:
                 friendship = Friends(friender_username=current_user.username, friend_username = username)
+                forced_friendship = Friends(friender_username=username, friend_username = current_user.username)
                 db.session.add(friendship)
+                db.session.add(forced_friendship)
                 db.session.commit()
                 flash('Friend added!', 'success')
                 return redirect(url_for("user.friends"))
@@ -136,7 +138,9 @@ class Profile:
         the_user = Users.query.filter_by(username=username).first()
         if request.method == "POST":
             friendship = Friends.query.filter_by(friender_username=current_user.username, friend_username = username).first()
+            forced_friendship = Friends.query.filter_by(friender_username=username, friend_username = current_user.username).first()
             db.session.delete(friendship)
+            db.session.delete(forced_friendship)
             db.session.commit()
             flash('Friend removed!', 'success')
             return redirect(url_for("user.friends"))
