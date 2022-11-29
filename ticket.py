@@ -28,7 +28,7 @@ class Ticket():
     def create_ticket():
         form = PostForm()
         if form.validate_on_submit():
-            post = Tickets(title=form.title.data, content=form.content.data, author=current_user.email)
+            post = Tickets(title=form.title.data, content=form.content.data, author=current_user.username)
             db.session.add(post)
             db.session.commit()
             flash('Your post has been created!', 'success')
@@ -44,7 +44,7 @@ class Ticket():
     @login_required
     def update_post(post_id):
         post = Tickets.query.get_or_404(post_id)
-        if post.author != current_user.email:
+        if post.author != current_user.username:
             abort(403)
         form = PostForm()
         if form.validate_on_submit():
@@ -62,7 +62,7 @@ class Ticket():
     @login_required
     def delete_post(post_id):
         post = Tickets.query.get_or_404(post_id)
-        if post.author != current_user.email:
+        if post.author != current_user.username:
             abort(403)
         db.session.delete(post)
         db.session.commit()

@@ -1,7 +1,7 @@
 #this file contains the parent class for the different epool users (drivers and riders)
 
 from flask import Blueprint, redirect, url_for, render_template, request, flash
-from models import Users, Tickets,db
+from models import Users, Tickets, Friends, db
 from auth import login_manager
 from flask_login import login_required, logout_user, current_user, login_user
 
@@ -18,6 +18,7 @@ class User:
     def create_account():
         if request.method == "POST":
             user_email = request.form["email"]
+            user_name = request.form["usrnm"]
             user_password = request.form["psw"]
             found_user = Users.query.filter_by(email=user_email).first()
 
@@ -29,7 +30,7 @@ class User:
                 return render_template("register.html")
             else:
                 flash("New account created!", 'success')
-                usr = Users(email = user_email)
+                usr = Users(email = user_email, username = user_name)
                 usr.set_password(user_password)
                 db.session.add(usr)
                 db.session.commit()
@@ -74,8 +75,21 @@ class User:
     @user.route("/friends")
     @login_required
     def friends():
-        return render_template("friends.html")
+        users = Users.query.all()
+        friendships = Friends.query.all()
+        the_friends = []
+        usernames = []
 
+        for user in users:
+            usernames.append(user.username)
+            for friends in friendships:
+                if user.username == friends.friend_username and user.username != current_user:
+                    the_friends.append(user.username)
+
+        the_others = set(usernames) - set(the_friends)
+
+        return render_template("friends.html", the_friends=the_friends, the_others=the_others)
+    
     @login_manager.user_loader
     def load_user(id):
         """Check if user is logged-in on every page load."""

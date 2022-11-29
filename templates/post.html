@@ -45,7 +45,7 @@
         <a href="{{ url_for('user.home')}}">Home</a>
         <a href="{{ url_for('ticket.ticket')}}" class="active">Tickets</a>
         <a href="{{ url_for('profile.profile')}}">Profile</a>
-        <a href="#Friends">Friends</a>
+        <a href="{{ url_for('user.friends')}}">Friends</a>
         <div class="subnav">
         <button class="subnavbtn">More 
             <i class="fa fa-caret-down"></i>
@@ -81,7 +81,7 @@
         <div class="article-metadata">
             <a class="mr-2" href="#">{{ post.author }}</a>
             <small class="text-muted">{{ post.date_posted.strftime('%Y-%m-%d') }}</small>
-            {% if post.author == current_user.email %}
+            {% if post.author == current_user.username %}
             <div>
                 <a class="btn btn-secondary btn-sm mt-1 mb-1" href="{{ url_for('ticket.update_post', post_id=post.id) }}" >Update</a>
                 <button type="button" class="btn btn-danger btn-sm m-1" data-toggle="modal" data-target="#deleteModal">Delete</button>

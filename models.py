@@ -17,6 +17,11 @@ class Users(UserMixin, db.Model):
         nullable=False,
         unique=True)
 
+    username = db.Column(
+        db.String(100),
+        nullable=False,
+        unique=True)
+
     password = db.Column(
         db.String(200),
         primary_key=False,
@@ -46,12 +51,17 @@ class Users(UserMixin, db.Model):
         primary_key=False,
         nullable=True,
         unique=False)
-    
+
     def set_password(self, password):
         self.password = generate_password_hash(password, method='sha256') # create hashed password
 
     def check_password(self, password):
         return check_password_hash(self.password, password) # check hashed password
+
+class Friends(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    friender_username = db.Column(db.String(100), nullable=False)
+    friend_username = db.Column(db.String(100), nullable=False)
 
 class Driver(Users):
     driver_rating = db.Column(

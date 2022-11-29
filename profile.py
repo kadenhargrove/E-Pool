@@ -1,7 +1,7 @@
 # This files contains the profile class that contains user information
 
 from flask import Blueprint, redirect, url_for, render_template, request, flash
-from models import Users, db
+from models import Users, Friends, db
 from flask_login import login_required, current_user, logout_user
 
 prof = Blueprint("profile", __name__, static_folder="static", template_folder="templates")
@@ -83,3 +83,42 @@ class Profile:
             return redirect(url_for("profile.delete_account"))
         else:
             return render_template("delete_account.html")
+
+    # for other users' profile
+    @prof.route("/profile/<username>", methods=['GET', 'POST'])
+    @login_required
+    def other(username):
+        the_user = Users.query.filter_by(username=username).first()
+        found_friendship = Friends.query.filter_by(friender_username=current_user.username, friend_username = username).first()
+        return render_template("other_profile.html", the_user=the_user, found_friendship=found_friendship)
+    
+    @prof.route("/profile/<username>/addfriend", methods=['GET', 'POST'])
+    @login_required
+    def add_friend(username):
+        the_user = Users.query.filter_by(username=username).first()
+        if request.method == "POST":
+            found_friendship = Friends.query.filter_by(friender_username=current_user.username, friend_username = username).first()
+            if found_friendship:
+                flash("Already friends!", 'success')
+                return redirect(url_for("user.friends"))
+            else:
+                friendship = Friends(friender_username=current_user.username, friend_username = username)
+                db.session.add(friendship)
+                db.session.commit()
+                flash('Friend added!', 'success')
+                return redirect(url_for("user.friends"))
+        else:
+            return render_template("other_profile.html", the_user=the_user)
+
+    @prof.route("/profile/<username>/deletefriend", methods=['GET', 'POST'])
+    @login_required
+    def delete_friend(username):
+        the_user = Users.query.filter_by(username=username).first()
+        if request.method == "POST":
+            friendship = Friends.query.filter_by(friender_username=current_user.username, friend_username = username).first()
+            db.session.delete(friendship)
+            db.session.commit()
+            flash('Friend removed!', 'success')
+            return redirect(url_for("user.friends"))
+        else:
+            return render_template("other_profile.html", the_user=the_user)
