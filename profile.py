@@ -1,7 +1,7 @@
 # This files contains the profile class that contains user information
 
 from flask import Blueprint, redirect, url_for, render_template, request, flash
-from models import Users, Friends, db
+from models import Users, Friends, Tickets, db
 from flask_login import login_required, current_user, logout_user
 
 prof = Blueprint("profile", __name__, static_folder="static", template_folder="templates")
@@ -69,8 +69,24 @@ class Profile:
             #check if password is valid
             if current_user.check_password(password1):
                 if password1 == password2: # check if passwords match
+                    #delete user posts
+                    tickets = Tickets.query.filter_by(author=current_user.username)
+                    for ticket in tickets:
+                        db.session.delete(ticket)
+
+                    #delete user friendships
+                    friender = Friends.query.filter_by(friender_username=current_user.username)
+                    for friendship in friender:
+                        db.session.delete(friendship)
+
+                    friend = Friends.query.filter_by(friend_username=current_user.username)
+                    for friendship in friend:
+                        db.session.delete(friendship)
+
                     #delete account
                     db.session.delete(current_user)
+
+                    #commit db changes
                     db.session.commit()
                     logout_user()
                     flash("Your account has been successfully deleted.", "success")

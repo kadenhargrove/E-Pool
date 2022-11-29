@@ -55,7 +55,7 @@
 
         <h2>Delete Account?</h2>
 
-        <p>All user data for {{current_user.email}} will be deleted from E-Pool.</p>
+        <p>All user data for <a href="{{ url_for('profile.profile')}}">{{current_user.username}}</a> will be deleted from E-Pool.</p>
 
         <form action="#" method = "post">
             <input type="password" placeholder="Enter Password" name="psw1" required>
