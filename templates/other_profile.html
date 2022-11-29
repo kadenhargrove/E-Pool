@@ -41,8 +41,12 @@
               {% endfor %}
           {% endif %}
       {% endwith %}
-
-      <h2>Profile</h2>
+    
+    {% if the_user.first_name != None and the_user.last_name != None %}
+        <h2>{{the_user.first_name}} {{the_user.last_name}}</h2>
+    {% else %}
+        <h2>User Profile</h2>
+    {% endif %}
         
         {% if not found_friendship %}
             <form action="{{ url_for('profile.add_friend', username=the_user.username) }}" method = "post">
@@ -60,7 +64,6 @@
         {% else %}
             <p>User: {{the_user.username}}</p>
             <p>Email: {{the_user.email}}</p>
-            <p> Name: {{the_user.first_name}} {{the_user.last_name}}</p>
             <p> Bio: {{the_user.bio}} </p>
             <p> Frequent Locations: {{the_user.frequent_locations}} </p>
         {% endif %}

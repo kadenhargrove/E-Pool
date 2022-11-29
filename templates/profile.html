@@ -53,7 +53,11 @@
           {% endif %}
       {% endwith %}
 
-        <h2>Profile</h2>
+      {% if current_user.first_name != None and current_user.last_name != None %}
+            <h2>{{current_user.first_name}} {{current_user.last_name}}</h2>
+      {% else %}
+            <h2>My Profile</h2>
+      {% endif %}
 
         {% if current_user.first_name == None and current_user.last_name == None and current_user.bio == None and current_user.frequent_locations == None %}
             <p>User: {{current_user.username}}</p>
@@ -64,7 +68,6 @@
         {% else %}
             <p>User: {{current_user.username}}</p>
             <p>Email: {{current_user.email}}</p>
-            <p> Name: {{current_user.first_name}} {{current_user.last_name}}</p>
             <p> Bio: {{current_user.bio}} </p>
             <p> Frequent Locations: {{current_user.frequent_locations}} </p>
         {% endif %}
