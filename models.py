@@ -1,5 +1,6 @@
 #this file contains the database models
 
+from time import time
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import UserMixin
 from datetime import datetime
@@ -85,3 +86,13 @@ class Tickets(db.Model):
 
     def __repr__(self):
         return f"Post('{self.title}', '{self.date_posted}')"
+  
+#class Notification(db.Model):
+    #id = db.Column(db.Integer, primary_key=True)
+    #name = db.Column(db.String(128), index=True)
+    #user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+    #timestamp = db.Column(db.Float, index=True, default=time)
+    #payload_json = db.Column(db.Text)
+
+    #def get_data(self):
+       # return #(str(self.payload_json))
