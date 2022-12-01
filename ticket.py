@@ -1,4 +1,4 @@
-from flask import Flask, redirect, url_for, render_template, request, session, flash, abort,Blueprint
+from flask import Flask, redirect, url_for, render_template, request, session, flash, abort, jsonify,Blueprint
 from datetime import timedelta
 from flask_sqlalchemy import SQLAlchemy
 from models import Tickets, db

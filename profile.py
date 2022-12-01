@@ -146,3 +146,18 @@ class Profile:
             return redirect(url_for("user.friends"))
         else:
             return render_template("other_profile.html", the_user=the_user)
+
+    @prof.route("/profile/<username>/blockuser", methods=['GET', 'POST'])
+    @login_required
+    def block_user(username):
+        the_user = Users.query.filter_by(username=username).first()
+        if request.method == "POST":
+            friendship = Friends.query.filter_by(friender_username=current_user.username, friend_username = username).first()
+            forced_friendship = Friends.query.filter_by(friender_username=username, friend_username = current_user.username).first()
+            db.session.delete(friendship)
+            db.session.delete(forced_friendship)
+            db.session.commit()
+            flash('Friend removed!', 'success')
+            return redirect(url_for("user.friends"))
+        else:
+            return render_template("other_profile.html", the_user=the_user)
