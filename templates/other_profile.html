@@ -48,13 +48,26 @@
         <h2>User Profile</h2>
     {% endif %}
         
-        {% if not found_friendship %}
-            <form action="{{ url_for('profile.add_friend', username=the_user.username) }}" method = "post">
-                <button type="submit" class="btn">Add Friend</button>
+        {% if not blocked %}
+            {% if not found_friendship %}
+                <form action="{{ url_for('profile.add_friend', username=the_user.username) }}" method = "post">
+                    <button type="submit" class="btn">Add Friend</button>
+                </form>
+            {% else %}
+                <form action="{{ url_for('profile.delete_friend', username=the_user.username) }}" method = "post">
+                    <button type="submit" class="btn">Unfriend</button>
+                </form>
+            {% endif %}
+            <br>
+        {% endif %}
+
+        {% if not blocked %}
+            <form action="{{ url_for('profile.block', username=the_user.username) }}" method = "post">
+                <button type="submit" class="btn">Block</button>
             </form>
         {% else %}
-            <form action="{{ url_for('profile.delete_friend', username=the_user.username) }}" method = "post">
-                <button type="submit" class="btn">Unfriend</button>
+            <form action="{{ url_for('profile.unblock', username=the_user.username) }}" method = "post">
+                <button type="submit" class="btn">Unblock</button>
             </form>
         {% endif %}
 

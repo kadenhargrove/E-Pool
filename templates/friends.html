@@ -50,6 +50,11 @@
                 <a href="{{ url_for('profile.other', username=user )}}">{{user}}</a>
             {% endfor %}
 
+            <h2>Blocked</h2>
+            {% for user in block_list %}
+                <a href="{{ url_for('profile.other', username=user )}}">{{user}}</a>
+            {% endfor %}
+
             <h2>Other Users</h2>
             {% for user in the_others %}
                 {% if user != current_user.username %}

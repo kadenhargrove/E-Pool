@@ -64,6 +64,11 @@ class Friends(db.Model):
     friender_username = db.Column(db.String(100), nullable=False)
     friend_username = db.Column(db.String(100), nullable=False)
 
+class Blocks(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    blocker_username = db.Column(db.String(100), nullable=False)
+    blocked_username = db.Column(db.String(100), nullable=False)
+
 class Driver(Users):
     driver_rating = db.Column(
         db.Integer,

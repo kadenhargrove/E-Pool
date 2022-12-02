@@ -52,22 +52,24 @@
         <p>Newly and Improved Craigslist Uber</p>
         <p></p>
         {% for post in posts %}
-        <article class="media content-section">
-          <div class="media-body">
-            <div class="article-metadata">
-              {% if post.author == current_user.username %}
-                <a class="mr-2" href="{{ url_for('profile.profile')}}">{{ post.author }}</a>
-              {% else %}
-                <a class="mr-2" href="{{ url_for('profile.other', username=post.author )}}">{{ post.author }}</a>
-              {% endif %}
+            {% if post.author not in block_list %}
+                <article class="media content-section">
+                    <div class="media-body">
+                        <div class="article-metadata">
+                        {% if post.author == current_user.username %}
+                            <a class="mr-2" href="{{ url_for('profile.profile')}}">{{ post.author }}</a>
+                        {% else %}
+                            <a class="mr-2" href="{{ url_for('profile.other', username=post.author )}}">{{ post.author }}</a>
+                        {% endif %}
 
-              <small class="text-muted">{{ post.date_posted.strftime('%Y-%m-%d') }}</small>
-            </div>
-            <h2><a class="article-title" href="{{ url_for('ticket.post', post_id=post.id) }}">{{ post.title }}</a></h2>
-            <p class="article-content">{{ post.content }}</p>
-          </div>
-        </article>
-    {% endfor %}
+                        <small class="text-muted">{{ post.date_posted.strftime('%Y-%m-%d') }}</small>
+                        </div>
+                        <h2><a class="article-title" href="{{ url_for('ticket.post', post_id=post.id) }}">{{ post.title }}</a></h2>
+                        <p class="article-content">{{ post.content }}</p>
+                    </div>
+                </article>
+            {% endif %}
+        {% endfor %}
     </div>
     </div>
 

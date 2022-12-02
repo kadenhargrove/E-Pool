@@ -1,7 +1,7 @@
 #this file contains the parent class for the different epool users (drivers and riders)
 
 from flask import Blueprint, redirect, url_for, render_template, request, flash
-from models import Users, Tickets, Friends, db
+from models import Users, Tickets, Friends, Blocks, db
 from auth import login_manager
 from flask_login import login_required, logout_user, current_user, login_user
 
@@ -12,7 +12,15 @@ class User:
     @user.route("home")
     def home():
         tickets = Tickets.query.order_by(Tickets.id.desc()).all()
-        return render_template("index.html", posts=tickets)
+        blocks = Blocks.query.all()
+
+        block_list = []
+
+        for block in blocks:
+            if block.blocker_username == current_user.username and block.blocked_username != current_user.username:
+                block_list.append(block.blocked_username)
+
+        return render_template("index.html", posts=tickets, block_list=block_list)
 
     @user.route("/register", methods=["POST", "GET"])
     def create_account():
@@ -78,8 +86,15 @@ class User:
     def friends():
         users = Users.query.all()
         friendships = Friends.query.all()
+        blocks = Blocks.query.all()
+
         the_friends = []
         usernames = []
+        block_list = []
+
+        for block in blocks:
+            if block.blocker_username == current_user.username and block.blocked_username != current_user.username:
+                block_list.append(block.blocked_username)
 
         for user in users:
             usernames.append(user.username)
@@ -87,9 +102,9 @@ class User:
                 if friends.friender_username == current_user.username and user.username == friends.friend_username and user.username != current_user.username:
                     the_friends.append(user.username)
 
-        the_others = set(usernames) - set(the_friends)
+        the_others = set(usernames) - set(the_friends) - set(block_list)
 
-        return render_template("friends.html", the_friends=the_friends, the_others=the_others)
+        return render_template("friends.html", the_friends=the_friends, the_others=the_others, block_list=block_list)
     
     @login_manager.user_loader
     def load_user(id):

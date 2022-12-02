@@ -1,7 +1,7 @@
 # This files contains the profile class that contains user information
 
 from flask import Blueprint, redirect, url_for, render_template, request, flash
-from models import Users, Friends, Tickets, db
+from models import Users, Friends, Tickets, Blocks, db
 from flask_login import login_required, current_user, logout_user
 
 prof = Blueprint("profile", __name__, static_folder="static", template_folder="templates")
@@ -106,13 +106,19 @@ class Profile:
     def other(username):
         the_user = Users.query.filter_by(username=username).first()
         found_friendship = Friends.query.filter_by(friender_username=current_user.username, friend_username = username).first()
-        return render_template("other_profile.html", the_user=the_user, found_friendship=found_friendship)
+        blocked = Blocks.query.filter_by(blocker_username=current_user.username, blocked_username = username).first()
+        return render_template("other_profile.html", the_user=the_user, found_friendship=found_friendship, blocked=blocked)
     
     @prof.route("/profile/<username>/addfriend", methods=['GET', 'POST'])
     @login_required
     def add_friend(username):
         the_user = Users.query.filter_by(username=username).first()
         if request.method == "POST":
+            found_block = Blocks.query.filter_by(blocker_username=current_user.username, blocked_username = username).first()
+            if found_block:
+                flash("Cannot friend blocked user!", 'warning')
+                return redirect(url_for("user.friends"))
+
             found_friendship = Friends.query.filter_by(friender_username=current_user.username, friend_username = username).first()
             if found_friendship:
                 flash("Already friends!", 'success')
@@ -146,18 +152,52 @@ class Profile:
             return redirect(url_for("user.friends"))
         else:
             return render_template("other_profile.html", the_user=the_user)
-
-    @prof.route("/profile/<username>/blockuser", methods=['GET', 'POST'])
+    
+    @prof.route("/profile/<username>/block", methods=['GET', 'POST'])
     @login_required
-    def block_user(username):
+    def block(username):
         the_user = Users.query.filter_by(username=username).first()
         if request.method == "POST":
-            friendship = Friends.query.filter_by(friender_username=current_user.username, friend_username = username).first()
-            forced_friendship = Friends.query.filter_by(friender_username=username, friend_username = current_user.username).first()
-            db.session.delete(friendship)
-            db.session.delete(forced_friendship)
+            found_block = Blocks.query.filter_by(blocker_username=current_user.username, blocked_username = username).first()
+            if found_block:
+                flash("Already blocked user!", 'success')
+                return redirect(url_for("user.friends"))
+                
+            elif the_user == current_user:
+                    flash('Cannot block self!', 'warning')
+                    return redirect(url_for("user.friends"))
+            else:
+                #make block entry
+                blockship = Blocks(blocker_username=current_user.username, blocked_username = username)
+                forced_blockship = Blocks(blocker_username = username, blocked_username=current_user.username)
+                db.session.add(blockship)
+                db.session.add(forced_blockship)
+
+                #end friendship
+                friendship = Friends.query.filter_by(friender_username=current_user.username, friend_username = username).first()
+                forced_friendship = Friends.query.filter_by(friender_username=username, friend_username = current_user.username).first()
+                if friendship:
+                    db.session.delete(friendship)
+                if forced_friendship:
+                    db.session.delete(forced_friendship)
+
+                db.session.commit()
+                flash('User blocked!', 'success')
+                return redirect(url_for("user.friends"))
+        else:
+            return render_template("other_profile.html", the_user=the_user)
+
+    @prof.route("/profile/<username>/unblock", methods=['GET', 'POST'])
+    @login_required
+    def unblock(username):
+        the_user = Users.query.filter_by(username=username).first()
+        if request.method == "POST":
+            blockship = Blocks.query.filter_by(blocker_username=current_user.username, blocked_username = username).first()
+            forced_blockship = Blocks.query.filter_by(blocker_username=username, blocked_username = current_user.username).first()
+            db.session.delete(blockship)
+            db.session.delete(forced_blockship)
             db.session.commit()
-            flash('Friend removed!', 'success')
+            flash('User unblocked!', 'success')
             return redirect(url_for("user.friends"))
         else:
             return render_template("other_profile.html", the_user=the_user)
