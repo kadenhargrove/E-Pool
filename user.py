@@ -16,9 +16,10 @@ class User:
 
         block_list = []
 
-        for block in blocks:
-            if block.blocker_username == current_user.username and block.blocked_username != current_user.username:
-                block_list.append(block.blocked_username)
+        if current_user.is_authenticated:
+            for block in blocks:
+                if block.blocker_username == current_user.username and block.blocked_username != current_user.username:
+                    block_list.append(block.blocked_username)
 
         return render_template("index.html", posts=tickets, block_list=block_list)
 
