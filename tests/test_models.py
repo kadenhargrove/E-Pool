@@ -146,3 +146,20 @@ def test_new_ticket(new_ticket):
 
     assert not new_ticket.author == 'khargr1'
     assert new_ticket.author == 'khargr2'
+
+# test Tickets model
+def test_new_comment(new_comment):
+    """
+    GIVEN a Comment model
+    WHEN a new Comment is created
+    THEN check the date_posted, tickets_id ,text, and author fields are defined correctly
+    """
+
+    assert not new_comment.text == 'comment for the pick me up ticket!!!'
+    assert new_comment.text == 'comment for the pick me up ticket'
+
+    assert not new_comment.author == 'khargr1'
+    assert new_comment.author == 'khargr2'
+
+    assert not new_comment.tickets_id == 2
+    assert new_comment.tickets_id == 1

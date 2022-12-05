@@ -102,11 +102,6 @@ class Ticket():
 
         return redirect(url_for('user.home'))     
 
-    # @ticket.route("/likePost", methods=["POST", "GET"])
-    # def likePost():
-    #     pass
-
-
         
 
     
