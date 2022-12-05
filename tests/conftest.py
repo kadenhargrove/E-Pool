@@ -1,3 +1,8 @@
+"""
+This file (conftest.py) contains configurations for the unit tests.
+All fixtures used in unit tests are created in this file.
+"""
+
 import pytest
 
 from init import create_app
