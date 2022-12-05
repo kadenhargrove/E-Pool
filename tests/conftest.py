@@ -38,3 +38,43 @@ def new_rider():
 def new_ticket():
     ticket = Tickets(title='Pick me up', date_posted=(2022, 12, 4), content="Im at the Bone.", author='khargr2')
     return ticket
+
+@pytest.fixture(scope='module')
+def test_client():
+    # Create a Flask app configured for testing
+    flask_app = create_app(db)
+
+    # Create a test client using the Flask application configured for testing
+    with flask_app.test_client() as testing_client:
+        # Establish an application context
+        with flask_app.app_context():
+            yield testing_client  # this is where the testing happens!
+
+@pytest.fixture(scope='module')
+def init_database(test_client):
+    # Create the database and the database table
+    db.create_all()
+
+    # Insert user data
+    user1 = Users(email='defaultuser@gmail.com', username='default', password='Epoolbetterthanuber')
+    user2 = Users(email='shaq@gmail.com', username='shaqoneil', password='Golakers34')
+    db.session.add(user1)
+    db.session.add(user2)
+
+    # Commit the changes for the users
+    db.session.commit()
+
+    yield  # this is where the testing happens!
+
+    db.drop_all()
+
+# @pytest.fixture(scope='function')
+# def login_default_user(test_client):
+#     test_client.post('/login',
+#                      data=dict(email='defaultuser@gmail.com', psw='Epoolbetterthanuber'), 
+#                      follow_redirects=True)
+
+#     yield  # this is where the testing happens!
+
+#     test_client.get('/logout', follow_redirects=True)
+
