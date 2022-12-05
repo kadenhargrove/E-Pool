@@ -1,0 +1,85 @@
+body, html {
+    height: 100%;
+  }
+  
+  * {
+    box-sizing: border-box;
+  }
+  
+  .bg-img {
+    /* The image used */
+    background-image: url("epoolBackground.png");
+  
+    /* Control the height of the image */
+    min-height: 700px;
+  
+    /* Center and scale the image nicely */
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    position: relative;
+  }
+  
+  /* Add styles to the form container */
+  .container {
+    position: absolute;
+    right: 0;
+    margin: 20px;
+    max-width: 300px;
+    padding: 16px;
+    background-color: white;
+  }
+  
+  /* Full-width input fields */
+   input[type=text], input[type=Location] {
+    width: 50%;
+    padding: 15px;
+    margin: 5px 12 22px 0;
+    border: none;
+    background: #f1f1f1;
+  }
+  
+  input[type=text], input[type=VehichleType] {
+    width: 50%;
+    padding: 15px;
+    margin: 5px 12 22px 0;
+    border: none;
+    background: #f1f1f1;
+  }
+
+  input[type=text], input[type=Time] {
+    width: 50%;
+    padding: 15px;
+    margin: 5px 12 22px 0;
+    border: none;
+    background: #f1f1f1;
+  }
+
+  input[type=text], input[type=Name] {
+    width: 50%;
+    padding: 15px;
+    margin: 5px 12 22px 0;
+    border: none;
+    background: #f1f1f1;
+  }
+  
+  /* Set a style for the comment button */
+  .btn {
+    background-color: #045daa; 
+    position: sticky;
+    border: none;
+    color: white;
+    padding: 15px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 13px;
+    margin: 10px 0px;
+    cursor: pointer;
+    border-radius: 12px;
+    opacity: 0.9;
+  }
+
+  .btn:hover {
+    opacity: 1;
+  }

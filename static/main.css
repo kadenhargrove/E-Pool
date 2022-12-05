@@ -227,3 +227,11 @@ p.ex1{
   .account-heading {
     font-size: 2.5rem;
   }
+
+  .btn {
+    background-color: #045daa; 
+    color: white;
+    position: relative;
+    border: none;
+
+  }

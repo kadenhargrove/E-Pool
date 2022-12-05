@@ -1,7 +1,7 @@
 from flask import Flask, redirect, url_for, render_template, request, session, flash, abort, jsonify,Blueprint
 from datetime import timedelta
 from flask_sqlalchemy import SQLAlchemy
-from models import Tickets, db
+from models import Comment, Tickets, db
 from user import user
 from flask_login import login_required, current_user, logout_user
 from flask_wtf import FlaskForm
@@ -68,13 +68,39 @@ class Ticket():
         db.session.commit()
         flash('Your post has been deleted!', 'success')
         return redirect(url_for('user.home'))
-                
-    # @ticket.route("/commentTicket", methods=["POST", "GET"])
-    # def commentTicket(self, ticketID):
-    #     qry = db.query(ticketID).filter(
-    #     ticket.id==id)
-    #     ticket = qry.first()
-        
+    
+    @ticketClass.route("/create-comment/<int:post_id>", methods=['POST'])
+    @login_required
+    def create_comment(post_id):
+        text = request.form.get('text')
+
+        if not text:
+            flash('Comment cannot be empty.', category='error')
+        else:
+            post = Tickets.query.filter_by(id=post_id)
+            if post:
+                comment = Comment(text=text, author=current_user.username, tickets_id=post_id)
+                db.session.add(comment)
+                db.session.commit()
+            else:
+                flash('Post does not exist.', category='error')
+
+        return redirect(url_for('user.home'))
+
+    @ticketClass.route("/delete-comment/<comment_id>")
+    @login_required
+    def delete_comment(comment_id):
+        comment = Comment.query.filter_by(id=comment_id).first()
+
+        if not comment:
+            flash('Comment does not exist.', category='error')
+        elif current_user.username != comment.author and current_user.username != comment.post.author:
+            flash('You do not have permission to delete this comment.', category='error')
+        else:
+            db.session.delete(comment)
+            db.session.commit()
+
+        return redirect(url_for('user.home'))     
 
     # @ticket.route("/likePost", methods=["POST", "GET"])
     # def likePost():

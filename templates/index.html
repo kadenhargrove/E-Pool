@@ -1,17 +1,38 @@
 <!DOCTYPE html>
 <html>
 <head>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <link rel="stylesheet" href="{{ url_for('static', filename='alerts.css')}}">
+<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='Commentform.css') }}">
+
+<link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
+      crossorigin="anonymous"/>
+
 <link rel="stylesheet" href="{{ url_for('static', filename='main.css')}}">
+
+
+      <style>
+        #epoologo {
+          width: 150px;
+          height: 40px;
+          position: relative;
+          vertical-align: top;
+          margin: -2px;
+        }
+    
+    </style>
 
 <body>
 
     <div class="bg-img">
         <h1>
         <a href="{{ url_for('user.home')}}"> 
-            <img src="{{url_for('static', filename='epoolLogo.png')}}" width = 150> 
+            <img id="epoologo" src="{{url_for('static', filename='epoolLogo.png')}}" width = 150> 
             </a>
         </h1>
         <!-- <p class="ex1">Craigslist Uber!</p> -->
@@ -66,12 +87,68 @@
                         </div>
                         <h2><a class="article-title" href="{{ url_for('ticket.post', post_id=post.id) }}">{{ post.title }}</a></h2>
                         <p class="article-content">{{ post.content }}</p>
+                        <div class="collapse" id="comments-{{post.id}}">
+                            <div class="card">
+                            <div class="card-body" id="comments-expanded-{{post.id}}">
+                                {% for comment in post.comments %}
+                                <div class="d-flex justify-content-between align-items-center">
+                                <div>
+                                    <a href="{{ url_for('profile.other', username=comment.users.username )}}"
+                                    >{{comment.users.username}}</a
+                                    >: {{comment.text}}
+                                </div>
+                                <div>
+                                    <small class="text-muted"> {{comment.date_created}}</small>
+                                    {% if current_user.username == comment.author or current_user.username == post.author %}
+                                    <div class="btn-group">
+                                    <button
+                                        id = "dropdownButt"
+                                        type="button"
+                                        class="btn btn-sm btn-primary dropdown-toggle"
+                                        data-bs-toggle="dropdown"
+                                    ></button>
+                                    <ul class="dropdown-menu">
+                                        <li>
+                                        <a
+                                            href="/delete-comment/{{comment.id}}"
+                                            class="dropdown-item"
+                                            >Delete</a
+                                        >
+                                        </li>
+                                    </ul>
+                                    </div>
+                                    {% endif %}
+                                </div>
+                                </div>
+                                {% endfor %}
+                            </div>
+                            </div>
+                        </div>
+                        <p class="card-text">
+                            {% if post.comments|length > 0 %}
+                            <a data-bs-toggle="collapse" href="#comments-{{post.id}}" role="button">
+                            <small>View {{post.comments|length}} Comments</small>
+                            </a>
+                            {% else %}
+                            <small class="text-muted">No Comments</small>
+                            {% endif %}
+                        </p>
+                        <form class="input-group mb-3" method='POST' action="/create-comment/{{post.id}}">
+                            <input type="text" id="text" name="text" class="form-control" placeholder="Comment Something!"/>
+                            <button type="submit" class="btn btn-primary">Comment</button>
+                        </form>
                     </div>
                 </article>
             {% endif %}
         {% endfor %}
     </div>
     </div>
+
+    <script
+    src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+    crossorigin="anonymous"
+  ></script>
 
     <script>
     function myFunction() {
