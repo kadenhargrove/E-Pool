@@ -61,8 +61,10 @@ def init_database(test_client):
     db.create_all()
 
     # Insert user data
-    user1 = Users(email='defaultuser@gmail.com', username='default', password='Epoolbetterthanuber')
-    user2 = Users(email='shaq@gmail.com', username='shaqoneil', password='Golakers34')
+    user1 = Users(email='defaultuser@gmail.com', username='default', password='')
+    user1.set_password("Epoolbetterthanuber")
+    user2 = Users(email='shaq@gmail.com', username='shaqoneil', password='')
+    user2.set_password("Golakers34")
     db.session.add(user1)
     db.session.add(user2)
 
@@ -73,13 +75,12 @@ def init_database(test_client):
 
     db.drop_all()
 
-# @pytest.fixture(scope='function')
-# def login_default_user(test_client):
-#     test_client.post('/login',
-#                      data=dict(email='defaultuser@gmail.com', psw='Epoolbetterthanuber'), 
-#                      follow_redirects=True)
+@pytest.fixture(scope='function')
+def login_default_user(test_client):
+    test_client.post('/login',
+                     data=dict(email='defaultuser@gmail.com', psw='Epoolbetterthanuber'), 
+                     follow_redirects=True)
 
-#     yield  # this is where the testing happens!
+    yield  # this is where the testing happens!
 
-#     test_client.get('/logout', follow_redirects=True)
-
+    test_client.get('/logout', follow_redirects=True)
