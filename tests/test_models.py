@@ -147,7 +147,7 @@ def test_new_ticket(new_ticket):
     assert not new_ticket.author == 'khargr1'
     assert new_ticket.author == 'khargr2'
 
-# test Tickets model
+# test Comment model
 def test_new_comment(new_comment):
     """
     GIVEN a Comment model
@@ -157,6 +157,9 @@ def test_new_comment(new_comment):
 
     assert not new_comment.text == 'comment for the pick me up ticket!!!'
     assert new_comment.text == 'comment for the pick me up ticket'
+
+    assert not new_comment.date_posted == (2022, 12, 5)
+    assert new_comment.date_posted == (2022, 12, 4)
 
     assert not new_comment.author == 'khargr1'
     assert new_comment.author == 'khargr2'

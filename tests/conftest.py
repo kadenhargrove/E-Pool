@@ -46,7 +46,7 @@ def new_ticket():
 
 @pytest.fixture(scope='module')
 def new_comment():
-    comments = Comment(text='comment for the pick me up ticket', author='khargr2', tickets_id = 1)
+    comments = Comment(text='comment for the pick me up ticket', date_posted=(2022, 12, 4) ,author='khargr2', tickets_id = 1)
     return comments
 
 @pytest.fixture(scope='module')
