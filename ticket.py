@@ -104,7 +104,7 @@ class Ticket():
     @login_required
     def like (tickets_id):
         post = Tickets.query.filter_by(id=tickets_id)
-        like = Like.query.filter_by(author= current_user.id, tickets_id = tickets_id).first()
+        like = Like.query.filter_by(author= current_user.username, tickets_id = tickets_id).first()
         if not post:
             flash('Post does not exist.', category = 'error')
             
@@ -113,7 +113,7 @@ class Ticket():
             db.session.commit()
             
         else:
-            like = Like(author= current_user.id, tickets_id = tickets_id)
+            like = Like(author= current_user.username, tickets_id = tickets_id)
             db.session.add(like)
             db.session.commit()
         

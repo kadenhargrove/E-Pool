@@ -60,6 +60,7 @@ class Users(UserMixin, db.Model):
         return check_password_hash(self.password, password) # check hashed password
 
     comments = db.relationship('Comment', backref='users', passive_deletes=True)
+    likes = db.relationship('Like', backref='users', passive_deletes=True)
 
 
 class Friends(db.Model):
