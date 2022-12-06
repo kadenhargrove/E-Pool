@@ -9,20 +9,24 @@ from flask_wtf import FlaskForm
 # from app.main.forms import MessageForm
 from models import Message
 
-
-
-
-
 mediator = Blueprint("mediator", __name__, static_folder="static", template_folder="templates")
 
 class Mediator(Users):
     
-    
-    
-    
-    
-    
-    
+    def __init__(self, username, groupchat, content):
+        self._username = username
+        self._groupchat = groupchat
+        self._content = content
+  
+
+    def getUsername(self):
+        return self._username
+
+    def getGroup(self):
+        return self._groupchat
+
+    def getContent(self):
+        return self._content
     
     
     @mediator.route('/send_message/<recipient>', methods=['GET', 'POST'])
