@@ -66,20 +66,28 @@
     
     <div style="padding-left:16px" id="insideText">
         <div class="content-section">
-            <form action="#" class="container" method = "post">
+            <form method="POST" action="">
                 <fieldset class="form-group">
                     <legend class="border-bottom mb-4">{{ legend }}</legend>
                     <div class="form-group">
                     <label for="title"><b>Title</b></label>
-                    <input type="text" name="ticketTitle" required>
+                    {% if legend == "Update Ticket"%}
+                    <input type="text" name="ticketTitle" value={{postContent.title}} required>
                     </div>
-
+                    {% else %}
+                    <input type="text" name="ticketTitle" required>
+                    {% endif %}
                     <div class="form-group">
 
                     <label for="content"><b>Content</b></label>
-                    <input type="text" name="ticketComment" required>
+                    {% if legend == "Update Ticket"%}
+                    <input type="text" name="ticketContent" value={{postContent.content}} required>
                     </div>
+                    {% else %}
+                    <input type="text" name="ticketContent" required>
+                    {% endif %}
                     <div class="form-group">
+
 
                     <button type="post" class="btn">Post</button>
                 </div>

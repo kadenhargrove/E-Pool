@@ -23,7 +23,7 @@ class Ticket():
     def create_ticket():
         if request.method == "POST":
             posted_title = request.form["ticketTitle"]
-            posted_content = request.form["ticketComment"]
+            posted_content = request.form["ticketContent"]
             post = Tickets(title=posted_title, content=posted_content, author=current_user.username)
             db.session.add(post)
             db.session.commit()
@@ -44,16 +44,17 @@ class Ticket():
             abort(403)
         if request.method == "POST":
             posted_title = request.form["ticketTitle"]
-            posted_content = request.form["ticketComment"]
+            posted_content = request.form["ticketContent"]
             post.title = posted_title
             post.content = posted_content
             db.session.commit()
             flash('Your post has been updated!', 'success')
             return redirect(url_for('ticket.post', post_id=post.id))
-        elif request.method == 'GET':
+        elif request.method == 'GET':  
             posted_title = post.title
             posted_content = post.content
-        return render_template("create_ticket.html", title='Update Ticket', legend="Update Ticket")
+
+        return render_template("create_ticket.html", title='Update Ticket', legend="Update Ticket", postContent=post)
 
     @ticketClass.route("/post/<int:post_id>/delete", methods=["POST", "GET"])
     @login_required
