@@ -92,10 +92,13 @@ class Tickets(db.Model):
     #user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
     author = db.Column(db.String(100), nullable=False)
     comments = db.relationship('Comment', backref='tickets', passive_deletes=True)
+    likes = db.relationship('Like', backref='tickets', passive_deletes=True)
 
 
     def __repr__(self):
         return f"Post('{self.title}', '{self.date_posted}')"
+
+
 
 class Comment(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -105,6 +108,19 @@ class Comment(db.Model):
         'users.username', ondelete="CASCADE"), nullable=False)
     tickets_id = db.Column(db.Integer, db.ForeignKey(
         'tickets.id', ondelete="CASCADE"), nullable=False)
+
+
+class Like(db.Model):
+     id = db.Column(db.Integer, primary_key=True)
+     date_posted = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
+     author = db.Column(db.Integer, db.ForeignKey(
+        'users.username', ondelete="CASCADE"), nullable=False)
+     tickets_id = db.Column(db.Integer, db.ForeignKey(
+        'tickets.id', ondelete="CASCADE"), nullable=False)
+     
+
+     
+
   
 #class Notification(db.Model):
     #id = db.Column(db.Integer, primary_key=True)
