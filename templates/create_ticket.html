@@ -2,38 +2,38 @@
 <html>
 <head>
 
-    <style>
-        #epoologo {
-          width: 150px;
-          height: 40px;
-          position: relative;
-          vertical-align: top;
-          margin: -2px;
-        }
-
-        .btn {
-        background-color: #045daa; /* Green */
-        border: none;
-        color: white;
-        padding: 15px;
-        text-align: center;
-        text-decoration: none;
-        display: inline-block;
-        font-size: 16px;
-        margin: 10px 0px;
-        cursor: pointer;
-        border-radius: 12px;
-    }
-
-    </style>
-
-
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <link rel="stylesheet" href="{{ url_for('static', filename='alerts.css')}}">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='main.css') }}">
 <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='Ticketform.css') }}">
+
+
+<style>
+    #epoologo {
+      width: 150px;
+      height: 40px;
+      position: relative;
+      vertical-align: top;
+      margin: -2px;
+    }
+
+    .btn {
+    background-color: #045daa; /* Green */
+    border: none;
+    color: white;
+    padding: 15px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 10px 0px;
+    cursor: pointer;
+    border-radius: 12px;
+}
+
+</style>
 
 <body>
 
@@ -66,40 +66,24 @@
     
     <div style="padding-left:16px" id="insideText">
         <div class="content-section">
-            <form method="POST" action="">
-                {{ form.hidden_tag() }}
+            <form action="#" class="container" method = "post">
                 <fieldset class="form-group">
                     <legend class="border-bottom mb-4">{{ legend }}</legend>
                     <div class="form-group">
-                        {{ form.title.label(class="form-control-label") }}
-                        {% if form.title.errors %}
-                            {{ form.title(class="form-control form-control-lg is-invalid") }}
-                            <div class="invalid-feedback">
-                                {% for error in form.title.errors %}
-                                    <span>{{ error }}</span>
-                                {% endfor %}
-                            </div>
-                        {% else %}
-                            {{ form.title(class="form-control form-control-lg") }}
-                        {% endif %}
+                    <label for="title"><b>Title</b></label>
+                    <input type="text" name="ticketTitle" required>
+                    </div>
+
+                    <div class="form-group">
+
+                    <label for="content"><b>Content</b></label>
+                    <input type="text" name="ticketComment" required>
                     </div>
                     <div class="form-group">
-                        {{ form.content.label(class="form-control-label") }}
-                        {% if form.content.errors %}
-                            {{ form.content(class="form-control form-control-lg is-invalid") }}
-                            <div class="invalid-feedback">
-                                {% for error in form.content.errors %}
-                                    <span>{{ error }}</span>
-                                {% endfor %}
-                            </div>
-                        {% else %}
-                            {{ form.content(class="form-control form-control-lg") }}
-                        {% endif %}
-                    </div>
-                </fieldset>
-                <div class="form-group">
-                    {{ form.submit(class="btn btn-outline-info") }}
+
+                    <button type="post" class="btn">Post</button>
                 </div>
+
             </form>
         </div>
         <p></p>

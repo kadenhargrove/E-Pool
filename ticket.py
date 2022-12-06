@@ -11,11 +11,6 @@ from wtforms.validators import DataRequired, Length, Email, EqualTo, ValidationE
 
 ticketClass = Blueprint("ticket", __name__, static_folder="static", template_folder="templates")
 
-class PostForm(FlaskForm):
-    title = StringField('Title', validators=[DataRequired()])
-    content = TextAreaField('Content', validators=[DataRequired()])
-    submit = SubmitField('Post')
-
 class Ticket():
 
     @ticketClass.route("/ticket")
@@ -26,14 +21,15 @@ class Ticket():
     @ticketClass.route("/createticket", methods=["POST", "GET"])
     @login_required
     def create_ticket():
-        form = PostForm()
-        if form.validate_on_submit():
-            post = Tickets(title=form.title.data, content=form.content.data, author=current_user.username)
+        if request.method == "POST":
+            posted_title = request.form["ticketTitle"]
+            posted_content = request.form["ticketComment"]
+            post = Tickets(title=posted_title, content=posted_content, author=current_user.username)
             db.session.add(post)
             db.session.commit()
             flash('Your post has been created!', 'success')
             return redirect(url_for('user.home'))
-        return render_template("create_ticket.html", title='New Ticket', form = form, legend = "New Ticket")
+        return render_template("create_ticket.html", title='New Ticket', legend = "New Ticket")
 
     @ticketClass.route("/post/<int:post_id>")
     def post(post_id):
@@ -46,17 +42,18 @@ class Ticket():
         post = Tickets.query.get_or_404(post_id)
         if post.author != current_user.username:
             abort(403)
-        form = PostForm()
-        if form.validate_on_submit():
-            post.title = form.title.data
-            post.content = form.content.data
+        if request.method == "POST":
+            posted_title = request.form["ticketTitle"]
+            posted_content = request.form["ticketComment"]
+            post.title = posted_title
+            post.content = posted_content
             db.session.commit()
             flash('Your post has been updated!', 'success')
             return redirect(url_for('ticket.post', post_id=post.id))
         elif request.method == 'GET':
-            form.title.data = post.title
-            form.content.data = post.content
-        return render_template("create_ticket.html", title='Update Ticket', form = form, legend="Update Ticket")
+            posted_title = post.title
+            posted_content = post.content
+        return render_template("create_ticket.html", title='Update Ticket', legend="Update Ticket")
 
     @ticketClass.route("/post/<int:post_id>/delete", methods=["POST", "GET"])
     @login_required
@@ -101,6 +98,7 @@ class Ticket():
             db.session.commit()
 
         return redirect(url_for('user.home'))     
+
 
         
 

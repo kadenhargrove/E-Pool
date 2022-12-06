@@ -40,23 +40,27 @@ def test_create_new_ticket(new_ticket):
     assert new_ticket.author == None
 
 
-def test_update_ticket(new_ticket):
+def test_update_ticket(new_ticket, test_client):
     """
     GIVEN a Flask application configured for testing
     WHEN the '/update_post' page is requested (GET)
     THEN check that the response is valid
     """
+    response = test_client.get('/post/<int:post_id>/update', data=new_ticket.id )
+    assert response.status_code == 200
+
+
     # setting a different post content from 'new_ticket'
-    new_ticket.date_posted = (2022, 12, 5)
-    new_ticket.title = 'Pick me up at the airport'
-    new_ticket.content = 'Im at the airport.'
-    new_ticket.author = 'rishi'
+    # new_ticket.date_posted = (2022, 12, 5)
+    # new_ticket.title = 'Pick me up at the airport'
+    # new_ticket.content = 'Im at the airport.'
+    # new_ticket.author = 'rishi'
     
     # test fails if any of the content is not updated
-    assert new_ticket.title == 'Pick me up at the airport'
-    assert new_ticket.content == 'Im at the airport.'
-    assert new_ticket.author == 'rishi'
-    assert new_ticket.date_posted == (2022, 12, 5)
+    # assert new_ticket.title == 'Pick me up at the airport'
+    # assert new_ticket.content == 'Im at the airport.'
+    # assert new_ticket.author == 'rishi'
+    # assert new_ticket.date_posted == (2022, 12, 5)
     
    
 def test_delete_post(test_client, init_database):
