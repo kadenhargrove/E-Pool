@@ -27,11 +27,11 @@ def test_edit_profile(init_database, test_client):
     assert response.status_code == 200
 
     response = test_client.post('/editprofile', data=dict(
-    first_name='User',
-    last_name='Name',
+    fname='User',
+    lname='Name',
     bio='This is my profile',
-    frequent_locations='Chicago, IL'
-), follow_redirects=True)
+    freqLoc='Chicago, IL'
+    ), follow_redirects=True)
 
     # Ensure that the request was successful (response code 200)
     assert response.status_code == 200
