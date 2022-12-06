@@ -5,6 +5,7 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <link rel="stylesheet" href="{{ url_for('static', filename='alerts.css')}}">
 <link rel="stylesheet" href="{{ url_for('static', filename='main.css')}}">
+<script src="https://kit.fontawesome.com/fdfd140beb.js" crossorigin="anonymous"></script>
 
 <style>
     .btn {
@@ -69,6 +70,9 @@
             </div>
             <h2><a class="article-title" href="{{ url_for('ticket.post', post_id=post.id) }}">{{ post.title }}</a></h2>
             <p class="article-content">{{ post.content }}</p>
+            {{post.likes | length }}
+            
+                <a href = "/like-post/{{post.id}}"><i class="fas fa-thumbs-up"></i></a>
           </div>
         </article>
         {% endif %}
