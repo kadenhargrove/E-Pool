@@ -137,12 +137,16 @@
                             <input type="text" id="text" name="text" class="form-control" placeholder="Comment Something!"/>
                             <button type="submit" class="btn btn-primary">Comment</button>
                         </form>
+                        {{post.likes | length }}
+                        <a href = "/like-post/{{post.id}}"><i class="fas fa-thumbs-up"></i></a>
                     </div>
                 </article>
             {% endif %}
         {% endfor %}
     </div>
     </div>
+
+    <script src="https://kit.fontawesome.com/fdfd140beb.js" crossorigin="anonymous"></script>
 
     <script
     src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"

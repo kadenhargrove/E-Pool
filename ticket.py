@@ -100,26 +100,24 @@ class Ticket():
 
         return redirect(url_for('user.home'))   
 
-@ticketClass.route("/like-post/<tickets_id>", methods=["GET"])
-@login_required
-def like (tickets_id):
-    post = Tickets.query.filter_by(id=tickets_id)
-    like = Like.query.filter_by(author= current_user.id, tickets_id = tickets_id).first()
-    if not post:
-        flash('Post does not exist.', category = 'error')
+    @ticketClass.route("/like-post/<tickets_id>", methods=["GET"])
+    @login_required
+    def like (tickets_id):
+        post = Tickets.query.filter_by(id=tickets_id)
+        like = Like.query.filter_by(author= current_user.id, tickets_id = tickets_id).first()
+        if not post:
+            flash('Post does not exist.', category = 'error')
+            
+        elif like:
+            db.session.delete(like)
+            db.session.commit()
+            
+        else:
+            like = Like(author= current_user.id, tickets_id = tickets_id)
+            db.session.add(like)
+            db.session.commit()
         
-    elif like:
-        db.session.delete(like)
-        db.session.commit()
-        
-    else:
-        like = Like(author= current_user.id, tickets_id = tickets_id)
-        db.session.add(like)
-        db.session.commit()
-      
-
-    
-    return redirect(url_for('ticket.ticket'))
+        return redirect(url_for('user.home'))
 
         
 
