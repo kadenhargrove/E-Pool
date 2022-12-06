@@ -72,7 +72,7 @@
                     <div class="form-group">
                     <label for="title"><b>Title</b></label>
                     {% if legend == "Update Ticket"%}
-                    <input type="text" name="ticketTitle" value={{postContent.title}} required>
+                    <input type="text" name="ticketTitle" value="{{postTitle}}" required>
                     </div>
                     {% else %}
                     <input type="text" name="ticketTitle" required>
@@ -81,14 +81,14 @@
 
                     <label for="content"><b>Content</b></label>
                     {% if legend == "Update Ticket"%}
-                    <input type="text" name="ticketContent" value={{postContent.content}} required>
+                    <input type="text" pattern="\s*\S+.*" name="ticketContent" value="{{postContent}}" required/>
                     </div>
                     {% else %}
                     <input type="text" name="ticketContent" required>
                     {% endif %}
+                </fieldset>
+
                     <div class="form-group">
-
-
                     <button type="post" class="btn">Post</button>
                 </div>
 

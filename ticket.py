@@ -54,7 +54,7 @@ class Ticket():
             posted_title = post.title
             posted_content = post.content
 
-        return render_template("create_ticket.html", title='Update Ticket', legend="Update Ticket", postContent=post)
+        return render_template("create_ticket.html", title='Update Ticket', legend="Update Ticket", postTitle=posted_title, postContent = posted_content)
 
     @ticketClass.route("/post/<int:post_id>/delete", methods=["POST", "GET"])
     @login_required
