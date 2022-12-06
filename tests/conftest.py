@@ -41,7 +41,7 @@ def new_rider():
 
 @pytest.fixture(scope='module')
 def new_ticket():
-    ticket = Tickets(title='Pick me up', date_posted=(2022, 12, 4), content="Im at the Bone.", author='khargr2')
+    ticket = Tickets(id = 1, title='Pick me up', date_posted=(2022, 12, 4), content="Im at the Bone.", author='khargr2')
     return ticket
 
 @pytest.fixture(scope='module')
@@ -70,10 +70,16 @@ def init_database(test_client):
     user1.set_password("Epoolbetterthanuber")
     user2 = Users(email='shaq@gmail.com', username='shaqoneil', password='')
     user2.set_password("Golakers34")
+
+    ticket1 = Tickets(id = 12, title='Pick me up now', content="Im at the library!", author='default')
+    ticket2 = Tickets(id = 13, title='Need a ride', content="Im at the arena!", author='shaqoneil')
+    
     db.session.add(user1)
     db.session.add(user2)
+    db.session.add(ticket1)
+    db.session.add(ticket2)
 
-    # Commit the changes for the users
+    # Commit the changes for the users and tickets
     db.session.commit()
 
     yield  # this is where the testing happens!
