@@ -1,7 +1,7 @@
 from flask import Flask, redirect, url_for, render_template, request, session, flash, abort, jsonify,Blueprint
 from datetime import timedelta
 from flask_sqlalchemy import SQLAlchemy
-from models import Comment, Tickets, db
+from models import Comment, Tickets, db, Like
 from user import user
 from flask_login import login_required, current_user, logout_user
 from flask_wtf import FlaskForm
@@ -68,7 +68,18 @@ class Ticket():
         db.session.commit()
         flash('Your post has been deleted!', 'success')
         return redirect(url_for('user.home'))
-    
+                
+    # @ticket.route("/commentTicket", methods=["POST", "GET"])
+    # def commentTicket(self, ticketID):
+    #     qry = db.query(ticketID).filter(
+    #     ticket.id==id)
+    #     ticket = qry.first()
+        
+
+    # @ticket.route("/likePost", methods=["POST", "GET"])
+    # def likePost():
+    #     pass
+
     @ticketClass.route("/create-comment/<int:post_id>", methods=['POST'])
     @login_required
     def create_comment(post_id):
@@ -106,6 +117,26 @@ class Ticket():
     # def likePost():
     #     pass
 
+@ticketClass.route("/like-post/<tickets_id>", methods=["GET"])
+@login_required
+def like (tickets_id):
+    post = Tickets.query.filter_by(id=tickets_id)
+    like = Like.query.filter_by(author= current_user.id, tickets_id = tickets_id).first()
+    if not post:
+        flash('Post does not exist.', category = 'error')
+        
+    elif like:
+        db.session.delete(like)
+        db.session.commit()
+        
+    else:
+        like = Like(author= current_user.id, tickets_id = tickets_id)
+        db.session.add(like)
+        db.session.commit()
+      
+
+    
+    return redirect(url_for('ticket.ticket'))
 
         
 
