@@ -1,7 +1,7 @@
 # This files contains the profile class that contains user information
 
 from flask import Blueprint, redirect, url_for, render_template, request, flash
-from models import Users, Friends, Tickets, Blocks, db
+from models import Users, Friends, Tickets, Blocks, db, Comment, Like
 from flask_login import login_required, current_user, logout_user
 
 prof = Blueprint("profile", __name__, static_folder="static", template_folder="templates")
@@ -91,6 +91,16 @@ class Profile:
                     blocked = Blocks.query.filter_by(blocked_username=current_user.username)
                     for blockship in blocked:
                         db.session.delete(blockship)
+
+                    #delete user comments
+                    comments = Comment.query.filter_by(author=current_user.username)
+                    for comment in comments:
+                        db.session.delete(comment)
+
+                    #delete user likes
+                    likes = Like.query.filter_by(author=current_user.username)
+                    for like in likes:
+                        db.session.delete(like)
 
                     #delete account
                     db.session.delete(current_user)
