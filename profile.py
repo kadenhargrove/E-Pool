@@ -83,6 +83,15 @@ class Profile:
                     for friendship in friend:
                         db.session.delete(friendship)
 
+                    #delete user blockships
+                    blocker = Blocks.query.filter_by(blocker_username=current_user.username)
+                    for blockship in blocker:
+                        db.session.delete(blockship)
+
+                    blocked = Blocks.query.filter_by(blocked_username=current_user.username)
+                    for blockship in blocked:
+                        db.session.delete(blockship)
+
                     #delete account
                     db.session.delete(current_user)
 
