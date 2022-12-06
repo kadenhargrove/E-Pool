@@ -6,7 +6,7 @@ All fixtures used in unit tests are created in this file.
 import pytest
 
 from init import create_app
-from models import db, Users, Friends, Blocks, Driver, Rider, Tickets, Comment
+from models import db, Users, Friends, Blocks, Driver, Rider, Tickets, Comment, Like
 
 @pytest.fixture
 def app():
@@ -48,6 +48,11 @@ def new_ticket():
 def new_comment():
     comments = Comment(text='comment for the pick me up ticket', date_posted=(2022, 12, 4) ,author='khargr2', tickets_id = 1)
     return comments
+
+@pytest.fixture(scope='module')
+def new_like():
+    like = Like(author='khargr2', date_posted=(2022, 12, 4), tickets_id = 1)
+    return like
 
 @pytest.fixture(scope='module')
 def test_client():

@@ -166,3 +166,19 @@ def test_new_comment(new_comment):
 
     assert not new_comment.tickets_id == 2
     assert new_comment.tickets_id == 1
+
+# test Like model
+def test_new_like(new_like):
+    """
+    GIVEN a Like model
+    WHEN a new Like is created
+    THEN check the date_posted, tickets_id, and author fields are defined correctly
+    """
+    assert not new_like.date_posted == (2022, 12, 5)
+    assert new_like.date_posted == (2022, 12, 4)
+
+    assert not new_like.author == 'khargr1'
+    assert new_like.author == 'khargr2'
+
+    assert not new_like.tickets_id == 2
+    assert new_like.tickets_id == 1
