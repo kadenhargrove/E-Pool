@@ -54,7 +54,7 @@ class Users(UserMixin, db.Model):
         unique=False)
 
     def set_password(self, password):
-        self.password = generate_password_hash(password, method='sha256') # create hashed password
+        self.password = generate_password_hash(password, method='pbkdf2') # create hashed password
 
     def check_password(self, password):
         return check_password_hash(self.password, password) # check hashed password
